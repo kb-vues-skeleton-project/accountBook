@@ -1,5 +1,5 @@
 <template>
-  <div>메인페이지</div>
+  <div>1234564</div>
 </template>
 
 <script setup></script>
