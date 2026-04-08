@@ -15,6 +15,15 @@ export const useTransactionStore = defineStore('transaction', () => {
     }
   };
 
+  const addTransaction = async (newTransaction) => {
+    try {
+      const response = await axios.post(BASEURITransactions, newTransaction);
+      transactions.value.push(response.data);
+    } catch (error) {
+      console.error('저장 실패:', error);
+    }
+  };
+
   //..
   // [Summary용 가공 데이터] 4월 총 지출 합계
   const totalAprilExpenditure = computed(() => {
@@ -35,5 +44,6 @@ export const useTransactionStore = defineStore('transaction', () => {
     totalAprilExpenditure,
     totalAprilIncome,
     fetchTransactions,
+    addTransaction,
   };
 });
