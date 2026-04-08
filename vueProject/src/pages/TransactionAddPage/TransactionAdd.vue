@@ -95,7 +95,7 @@ const saveTransaction = () => {
   };
   console.log('서버로 보낼 데이터:', newTransaction);
   alert('저장되었습니다!');
-  router.push('/');
+  router.push('/summary');
 };
 </script>
 
