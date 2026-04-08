@@ -15,6 +15,7 @@ export const useTransactionStore = defineStore('transaction', () => {
     }
   };
 
+  //..
   // [Summary용 가공 데이터] 4월 총 지출 합계
   const totalAprilExpenditure = computed(() => {
     return transactions.value
