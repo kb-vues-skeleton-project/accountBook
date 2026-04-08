@@ -1,7 +1,9 @@
 <template>
-  <div></div>
+  <TransactionItem />
 </template>
 
-<script setup></script>
+<script setup>
+import TransactionItem from '@/components/TransactionList/TransactionItem.vue';
+</script>
 
 <style scoped></style>
