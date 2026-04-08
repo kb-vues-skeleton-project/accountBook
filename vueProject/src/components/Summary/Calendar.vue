@@ -7,8 +7,9 @@
       @dayclick="onDayClick"
     >
       <template #day-content="{ day }">
-        <div class="day-cell">
+        <div class="day-cell" @click.stop="onDayClick(day)">
           <span class="day-label">{{ day.day }}</span>
+
           <div class="day-info" v-if="getDaySummary(day.id)">
             <p v-if="getDaySummary(day.id).income > 0" class="income-text">
               +{{ getDaySummary(day.id).income.toLocaleString() }}
@@ -21,21 +22,19 @@
       </template>
     </VDatePicker>
 
-    <div v-if="isModalOpen" class="modal-overlay" @click="isModalOpen = false">
-      <div class="modal-content" @click.stop>
-        <h4>{{ clickedDate }} 내역</h4>
-        <div v-for="item in dailyDetails" :key="item.id" class="detail-item">
-          {{ item.name }}: {{ item.balance.toLocaleString() }}원
-        </div>
-        <button @click="isModalOpen = false">닫기</button>
-      </div>
-    </div>
+    <DailyDetail
+      v-if="isModalOpen"
+      :date="clickedDate"
+      :transactions="dailyDetails"
+      @close="isModalOpen = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useTransactionStore } from '@/stores/transactionStore';
+import DailyDetail from '@/pages/SummaryPage/DailyDetail.vue';
 
 const transactionStore = useTransactionStore();
 const selectedDate = ref(new Date());
@@ -59,47 +58,42 @@ const getDaySummary = (dateString) => {
 };
 
 const onDayClick = (day) => {
+  // 2. 이벤트가 들어오는지 콘솔로 먼저 확인
+  console.log('날짜 클릭됨!', day.id);
+
   clickedDate.value = day.id;
   dailyDetails.value = transactionStore.transactions.filter(
     (t) => t.date === day.id,
   );
-  if (dailyDetails.value.length > 0) isModalOpen.value = true;
+
+  // 데이터 유무 관계 없이 모달창 띄우기
+  isModalOpen.value = true;
 };
 </script>
 
 <style scoped>
 .day-cell {
-  min-height: 60px;
-  padding: 2px;
+  min-height: 80px; /* 높이를 충분히 확보 */
+  padding: 4px;
   border-top: 1px solid #f8f8f8;
+  cursor: pointer; /* 다시 손가락 모양 나오게 설정 */
+  display: flex;
+  flex-direction: column;
+  z-index: 10; /* 클릭 우선순위 확보 */
 }
+
+/* 3. pointer-events 관련 코드는 싹 지워주세요! */
+
 .income-text {
   color: #03c75a;
   font-size: 10px;
   margin: 0;
+  text-align: right;
 }
 .spend-text {
   color: #ff4d4f;
   font-size: 10px;
   margin: 0;
-}
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 400px;
+  text-align: right;
 }
 </style>
