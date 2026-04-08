@@ -1,7 +1,11 @@
 <template>
-  <div></div>
+  <CategorySelect />
+  <TransactionItem />
 </template>
 
-<script setup></script>
+<script setup>
+import CategorySelect from '@/components/TransactionList/CategorySelect.vue';
+import TransactionItem from '@/components/TransactionList/TransactionItem.vue';
+</script>
 
 <style scoped></style>

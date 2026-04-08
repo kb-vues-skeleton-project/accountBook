@@ -10,28 +10,78 @@
     }
   ],
   "category": [
-    { "id": 1, "name": "미분류", "image": "etc.png", "type": "expenditure" },
-    { "id": 2, "name": "식비", "image": "food.png", "type": "expenditure" },
-    { "id": 3, "name": "쇼핑", "image": "shopping.png", "type": "expenditure" },
-    { "id": 4, "name": "병원", "image": "hospital.png", "type": "expenditure" },
-    { "id": 5, "name": "여가", "image": "leisure.png", "type": "expenditure" },
+    {
+      "id": 1,
+      "name": "미분류",
+      "image": "etc.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 2,
+      "name": "식비",
+      "image": "food.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 3,
+      "name": "쇼핑",
+      "image": "shopping.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 4,
+      "name": "병원",
+      "image": "hospital.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 5,
+      "name": "여가",
+      "image": "leisure.png",
+      "type": "expenditure"
+    },
     {
       "id": 6,
       "name": "교통",
       "image": "transport.png",
       "type": "expenditure"
     },
-    { "id": 7, "name": "미용", "image": "beauty.png", "type": "expenditure" },
+    {
+      "id": 7,
+      "name": "미용",
+      "image": "beauty.png",
+      "type": "expenditure"
+    },
     {
       "id": 8,
       "name": "통신비",
       "image": "telecom.png",
       "type": "expenditure"
     },
-    { "id": 9, "name": "구독", "image": "sub.png", "type": "expenditure" },
-    { "id": 10, "name": "급여", "image": "salary.png", "type": "income" },
-    { "id": 11, "name": "용돈", "image": "allowance.png", "type": "income" },
-    { "id": 12, "name": "금융수입", "image": "finance.png", "type": "income" }
+    {
+      "id": 9,
+      "name": "구독",
+      "image": "sub.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 10,
+      "name": "급여",
+      "image": "salary.png",
+      "type": "income"
+    },
+    {
+      "id": 11,
+      "name": "용돈",
+      "image": "allowance.png",
+      "type": "income"
+    },
+    {
+      "id": 12,
+      "name": "금융수입",
+      "image": "finance.png",
+      "type": "income"
+    }
   ],
   "goal": [
     {
@@ -205,6 +255,42 @@
       "categoryId": 2,
       "memo": "맥주 및 안주",
       "selfCheck": 3
+    },
+    {
+      "type": "expenditure",
+      "balance": 3,
+      "name": "dfds",
+      "categoryId": 1,
+      "date": "2026-04-08",
+      "memo": "dfsf",
+      "createdAt": 1775632913950,
+      "userId": "admin",
+      "id": 13
+    },
+    {
+      "createdAt": 1775634175815,
+      "userId": "admin",
+      "balance": 45000,
+      "type": "expenditure",
+      "date": "2026-04-08",
+      "name": "케이크 주문 제작",
+      "method": 3,
+      "static": false,
+      "categoryId": 1,
+      "memo": "계좌이체",
+      "id": 14
+    },
+    {
+      "userId": "admin",
+      "balance": 1000,
+      "type": "expenditure",
+      "date": "2026-04-07",
+      "name": "테스트",
+      "method": 1,
+      "static": true,
+      "categoryId": 3,
+      "memo": "",
+      "id": 15
     }
   ]
 }
