@@ -59,7 +59,7 @@
       "name": "3월 급여",
       "method": "현금",
       "static": true,
-      "categoryId": "10",
+      "categoryId": 10,
       "memo": "정기 급여",
       "selfCheck": 1
     },
@@ -72,7 +72,7 @@
       "name": "통신비 정기결제",
       "method": "신용",
       "static": true,
-      "categoryId": "8",
+      "categoryId": 8,
       "memo": "SKT 요금",
       "selfCheck": 2
     },
@@ -85,7 +85,7 @@
       "name": "넷플릭스",
       "method": "신용",
       "static": true,
-      "categoryId": "9",
+      "categoryId": 9,
       "memo": "구독료",
       "selfCheck": 1
     },
@@ -98,7 +98,7 @@
       "name": "미용실 커트",
       "method": "체크",
       "static": false,
-      "categoryId": "7",
+      "categoryId": 7,
       "memo": "단골집",
       "selfCheck": 1
     },
@@ -111,7 +111,7 @@
       "name": "스타벅스",
       "method": "신용",
       "static": false,
-      "categoryId": "2",
+      "categoryId": 2,
       "memo": "친구랑 커피",
       "selfCheck": 2
     },
@@ -124,7 +124,7 @@
       "name": "백화점 쇼핑",
       "method": "신용",
       "static": false,
-      "categoryId": "3",
+      "categoryId": 3,
       "memo": "봄 셔츠 구매",
       "selfCheck": 3
     },
@@ -137,7 +137,7 @@
       "name": "시내버스",
       "method": "체크",
       "static": false,
-      "categoryId": "6",
+      "categoryId": 6,
       "memo": "출근길",
       "selfCheck": 2
     },
@@ -150,7 +150,7 @@
       "name": "내과 진료",
       "method": "신용",
       "static": false,
-      "categoryId": "4",
+      "categoryId": 4,
       "memo": "감기 기운",
       "selfCheck": 1
     },
@@ -163,7 +163,7 @@
       "name": "영화 및 팝콘",
       "method": "신용",
       "static": false,
-      "categoryId": "5",
+      "categoryId": 5,
       "memo": "주말 여가",
       "selfCheck": 1
     },
@@ -176,7 +176,7 @@
       "name": "김치찌개",
       "method": "신용",
       "static": false,
-      "categoryId": "2",
+      "categoryId": 2,
       "memo": "점심 식사",
       "selfCheck": 1
     },
@@ -189,7 +189,7 @@
       "name": "주식 배당금",
       "method": "현금",
       "static": false,
-      "categoryId": "12",
+      "categoryId": 12,
       "memo": "커피값 벌었다",
       "selfCheck": 1
     },
@@ -202,7 +202,7 @@
       "name": "편의점",
       "method": "체크",
       "static": false,
-      "categoryId": "2",
+      "categoryId": 2,
       "memo": "맥주 및 안주",
       "selfCheck": 3
     }
