@@ -7,10 +7,11 @@ export const useUserStore = defineStore('userStore', () => {
 
   const state = reactive({
     users: [], // 전체 유저 리스트
-    currentUser: null, // 로그인한 유저 정보 저장용
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+    // 현재 유저 정보 (없거나 로그인 후 가져오기)
   });
 
-  // 1. 전체 유저 조회 (중복 확인 및 검증용)
+  // 전체 유저 조회 (중복 확인 및 검증용)
   const fetchUsers = async () => {
     try {
       const response = await axios.get(BASEURI);
@@ -20,12 +21,12 @@ export const useUserStore = defineStore('userStore', () => {
     }
   };
 
-  // 2. ID 중복 확인
+  // ID 중복 확인
   const isIdDuplicate = (userId) => {
     return state.users.some((user) => user.userId === userId);
   };
 
-  // 3. 회원가입 (POST)
+  // 회원가입
   const signUp = async (newUser, successCallback) => {
     try {
       const response = await axios.post(BASEURI, newUser);
@@ -39,10 +40,29 @@ export const useUserStore = defineStore('userStore', () => {
     }
   };
 
+  // 로그인 (ID/PW 확인)
+  const login = (userId, password) => {
+    const foundUser = state.users.find(
+      (u) => u.userId === userId && u.password === password,
+    );
+
+    if (foundUser) {
+      // 로그인 한 유저 정보 저장
+      state.currentUser = foundUser;
+      localStorage.setItem('currentUser', JSON.stringify(foundUser.userId));
+      return { success: true };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
+
   return {
     state,
     fetchUsers,
     isIdDuplicate,
     signUp,
+    login,
   };
 });
