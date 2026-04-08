@@ -55,7 +55,6 @@
       v-model="selectedDate"
       expanded
       borderless
-      :attributes="attributes"
       @dayclick="onDayClick"
     >
       <template #day-content="{ day, attributes }">
@@ -154,8 +153,7 @@ const onDayClick = (day) => {
 };
 </script>
 
-<!-- <style scoped>
-
+<style scoped>
 /* 상단바: 네이버 감성의 깔끔한 스타일 */
 .summary-container {
   padding: 20px;
@@ -241,4 +239,4 @@ const onDayClick = (day) => {
   border-radius: 8px;
   min-width: 300px;
 }
-</style> -->
+</style>
