@@ -1,15 +1,7 @@
 <template>
   <div class="summary-page">
     <Goal />
-
     <Calendar />
-
-    <div class="alert-section" v-if="transactionStore.transactions.length > 0">
-      <p class="alert-text">
-        이번 달 과소비 금액은
-        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요. 💸
-      </p>
-    </div>
   </div>
 </template>
 
@@ -31,12 +23,6 @@ onMounted(async () => {
     transactionStore.fetchTransactions(),
     goalStore.fetchGoals(),
   ]);
-});
-
-const overSpendAmount = computed(() => {
-  return transactionStore.transactions
-    .filter((t) => t.date.startsWith('2026-04') && t.selfCheck === 3)
-    .reduce((acc, cur) => acc + cur.balance, 0);
 });
 </script>
 

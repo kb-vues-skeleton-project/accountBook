@@ -33,12 +33,28 @@
         >
       </div>
     </div>
+    <div class="alert-section" v-if="transactionStore.transactions.length > 0">
+      <p class="alert-text">
+        이번 달 과소비 금액은
+        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요. 💸
+      </p>
+    </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useGoalStore } from '@/stores/goalStore';
+import { useTransactionStore } from '@/stores/transactionStore';
+
 const goalStore = useGoalStore();
+const transactionStore = useTransactionStore();
+
+const overSpendAmount = computed(() => {
+  return transactionStore.transactions
+    .filter((t) => t.date.startsWith('2026-04') && t.selfCheck === 3)
+    .reduce((acc, cur) => acc + cur.balance, 0);
+});
 </script>
 
 <style scoped>
