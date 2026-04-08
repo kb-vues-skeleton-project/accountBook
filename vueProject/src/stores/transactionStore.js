@@ -5,10 +5,10 @@ import axios from 'axios';
 
 export const useTransactionStore = defineStore('transaction', () => {
   const transactions = ref([]);
-
+  const BASEURITransactions = '/api/transactions';
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/transactions');
+      const response = await axios.get(BASEURITransactions);
       transactions.value = response.data;
     } catch (error) {
       console.error('거래 내역 로딩 실패:', error);
