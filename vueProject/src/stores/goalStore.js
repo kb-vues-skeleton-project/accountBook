@@ -23,9 +23,11 @@ export const useGoalStore = defineStore('goal', () => {
 
   // [현재 달(4월) 목표 객체 찾기]
   const currentMonthGoal = computed(() => {
-    // db.json의 date 형식 "26-04"와 일치하는 데이터 탐색
+    // ⭐ userId가 'admin'이고 날짜가 '26-04'인 데이터를 찾습니다.
+    // 데이터가 없을 때를 대비해 null을 반환하거나 기본 객체를 반환합니다.
     return (
-      goals.value.find((g) => g.date === '26-04') || { balance: 0, amount: 0 }
+      goals.value.find((g) => g.userId === 'admin' && g.date === '26-04') ||
+      null
     );
   });
 
