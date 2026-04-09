@@ -6,6 +6,7 @@ import axios from 'axios';
 export const useTransactionStore = defineStore('transaction', () => {
   const transactions = ref([]);
   const BASEURITransactions = '/api/transactions';
+
   const fetchTransactions = async () => {
     try {
       const response = await axios.get(BASEURITransactions);
@@ -21,6 +22,23 @@ export const useTransactionStore = defineStore('transaction', () => {
       transactions.value.push(response.data);
     } catch (error) {
       console.error('저장 실패:', error);
+    }
+  };
+
+  const updateTransaction = async (id, updatedData) => {
+    try {
+      const response = await axios.put(
+        `${BASEURITransactions}/${id}`,
+        updatedData,
+      );
+      const index = state.transactions.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        state.transactions[index] = response.data;
+      }
+      return true;
+    } catch (error) {
+      console.error('수정 실패 :', error);
+      return false;
     }
   };
 
