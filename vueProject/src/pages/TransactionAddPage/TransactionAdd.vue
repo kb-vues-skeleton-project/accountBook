@@ -64,10 +64,6 @@
       저장하기
     </button>
   </div>
-
-  <div>
-    <button type="button" @click="router.back()">돌아가기</button>
-  </div>
 </template>
 
 <script setup>
