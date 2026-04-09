@@ -5,6 +5,7 @@
       expanded
       borderless
       @dayclick="onDayClick"
+      @update:pages="onPageChange"
     >
       <template #day-content="{ day }">
         <div class="day-cell" @click.stop="onDayClick(day)">
@@ -36,11 +37,25 @@ import { ref } from 'vue';
 import { useTransactionStore } from '@/stores/transactionStore';
 import DailyDetail from '@/pages/SummaryPage/DailyDetail.vue';
 
+const emit = defineEmits(['view-change']);
 const transactionStore = useTransactionStore();
 const selectedDate = ref(new Date());
-const isModalOpen = ref(false);
-const clickedDate = ref('');
-const dailyDetails = ref([]);
+
+// 달력 페이지(달)가 변경될 때 호출
+const onPageChange = (pages) => {
+  const page = pages[0]; // 현재 보고 있는 페이지 정보
+
+  // 해당 달의 시작일과 종료일 계산
+  const year = page.year;
+  const month = String(page.month).padStart(2, '0');
+
+  const startDate = `${year}-${month}-01`;
+  const lastDay = new Date(year, page.month, 0).getDate();
+  const endDate = `${year}-${month}-${lastDay}`;
+
+  // 부모에게 변경된 날짜 범위를 알림
+  emit('view-change', { startDate, endDate });
+};
 
 const getDaySummary = (dateString) => {
   const dayTransactions = transactionStore.transactions.filter(
@@ -58,7 +73,7 @@ const getDaySummary = (dateString) => {
 };
 
 const onDayClick = (day) => {
-  // 2. 이벤트가 들어오는지 콘솔로 먼저 확인
+  // 이벤트가 들어오는지 콘솔로 먼저 확인
   console.log('날짜 클릭됨!', day.id);
 
   clickedDate.value = day.id;
@@ -81,8 +96,6 @@ const onDayClick = (day) => {
   flex-direction: column;
   z-index: 10; /* 클릭 우선순위 확보 */
 }
-
-/* 3. pointer-events 관련 코드는 싹 지워주세요! */
 
 .income-text {
   color: #03c75a;

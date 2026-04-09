@@ -6,15 +6,37 @@ import axios from 'axios';
 export const useTransactionStore = defineStore('transaction', () => {
   const transactions = ref([]);
   const BASEURITransactions = '/api/transactions';
-  const fetchTransactions = async () => {
+
+  // 거래 내역 조회
+  const fetchTransactions = async ({
+    userId,
+    startDate,
+    endDate,
+    categoryId,
+    isStatic,
+  }) => {
     try {
-      const response = await axios.get(BASEURITransactions);
+      // userId 및 기간 조회(json-server 기준: date_gte(크거나 같음), date_lte(작거나 같음))
+      let url = `${BASEURITransactions}?userId=${userId}&date_gte=${startDate}&date_lte=${endDate}`;
+
+      // 카테고리별 조회
+      if (categoryId && categoryId !== 0) {
+        url += `&categoryId=${categoryId}`;
+      }
+
+      // 고정 지출별 조회
+      if (isStatic !== undefined && isStatic !== null) {
+        url += `&static=${isStatic}`;
+      }
+
+      const response = await axios.get(url);
       transactions.value = response.data;
     } catch (error) {
       console.error('거래 내역 로딩 실패:', error);
     }
   };
 
+  // 거래 내역 추가
   const addTransaction = async (newTransaction) => {
     try {
       const response = await axios.post(BASEURITransactions, newTransaction);
