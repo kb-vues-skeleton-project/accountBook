@@ -40,12 +40,11 @@
     <button type="button" @click="AddCategory">추가</button>
   </div>
 
-  <div id="static-container">
+  <div v-if="type === 'expenditure'" id="static-container">
     <label>
       <input type="checkbox" v-model="isStatic" />
       고정지출
     </label>
-    <!-- <span>({{ isStatic ? '고정지출' : '변동지출' }})</span> -->
   </div>
 
   <div>
@@ -66,8 +65,8 @@
     </button>
   </div>
 
-  <div class="close-container">
-    <button type="button" class="btn-close" @click="CloseTransaction"></button>
+  <div>
+    <button type="button" @click="router.back()">돌아가기</button>
   </div>
 </template>
 
@@ -97,10 +96,6 @@ const filteredCategoryList = computed(() => {
 
 const AddCategory = () => {
   router.push('/category');
-};
-
-const CloseTransaction = () => {
-  router.push('/summary');
 };
 
 const type = ref('expenditure');

@@ -1,29 +1,42 @@
 <template>
   <div class="summary-page">
-    <Goal />
-    <Calendar />
+    <Goal :yearMonth="currMonth" />
+    <Calendar @view-change="handleViewChange" /> <AddButton />
+    <RouterView />
   </div>
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue';
+import { ref } from 'vue';
 import { useTransactionStore } from '@/stores/transactionStore';
 import { useGoalStore } from '@/stores/goalStore';
 
-// 분리한 컴포넌트 임포트
 import Goal from '@/components/Summary/Goal.vue';
 import Calendar from '@/components/Summary/Calendar.vue';
+import AddButton from '@/components/Summary/AddButton.vue';
 
 const transactionStore = useTransactionStore();
 const goalStore = useGoalStore();
+const userId = JSON.parse(localStorage.getItem('currentUser'));
 
-onMounted(async () => {
-  // 부모가 데이터를 한 번만 불러오면 자식들은 자동으로 갱신됨
+const now = new Date();
+const currMonth = ref(
+  `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`,
+);
+
+// 달력 범위가 변경될 때 서버에서 데이터 fetch
+const handleViewChange = async ({ startDate, endDate }) => {
+  currMonth.value = startDate.substring(0, 7);
+
   await Promise.all([
-    transactionStore.fetchTransactions(),
-    goalStore.fetchGoals(),
+    transactionStore.fetchTransactions({
+      userId: userId,
+      startDate,
+      endDate,
+    }),
+    goalStore.fetchGoalByMonth(userId, currMonth.value.substring(2)),
   ]);
-});
+};
 </script>
 
 <style scoped>

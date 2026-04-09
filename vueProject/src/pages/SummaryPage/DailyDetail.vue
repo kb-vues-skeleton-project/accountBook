@@ -1,9 +1,9 @@
 <template>
-  <div class="modal-overlay" @click="$emit('close')">
+  <div class="modal-overlay" @click="closeModal">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
         <h3>{{ formattedDate }}</h3>
-        <button class="close-btn" @click="$emit('close')">×</button>
+        <button class="close-btn" @click="closeModal">×</button>
       </div>
 
       <div class="modal-body">
@@ -15,7 +15,7 @@
               <span class="amount income"
                 >+{{ item.balance.toLocaleString() }}원</span
               >
-              <button class="edit-btn">✏️</button>
+              <button class="edit-btn" @click="editModal(item.id)">✏️</button>
             </li>
           </ul>
         </div>
@@ -28,7 +28,7 @@
               <span class="amount expense"
                 >-{{ item.balance.toLocaleString() }}원</span
               >
-              <button class="edit-btn">✏️</button>
+              <button class="edit-btn" @click="editModal(item.id)">✏️</button>
             </li>
           </ul>
         </div>
@@ -45,30 +45,50 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useTransactionStore } from '@/stores/transactionStore';
 
-const props = defineProps({
-  date: String, // "2026-04-08" 형식
-  transactions: Array, // 해당 날짜의 필터링된 배열
-});
+const route = useRoute();
+const router = useRouter();
+const transactionStore = useTransactionStore();
 
-defineEmits(['close']);
+const dateParam = computed(() => route.params.date);
 
-// 날짜 형식 변환 (2026.04.08(수))
-const formattedDate = computed(() => {
-  if (!props.date) return '';
-  const dateObj = new Date(props.date);
-  const week = ['일', '월', '화', '수', '목', '금', '토'];
-  return `${props.date.replace(/-/g, '.')} (${week[dateObj.getDay()]})`;
+const closeModal = () => {
+  router.push('/summary');
+};
+
+const editModal = (id) => {
+  router.push({
+    path: '/transactionEdit',
+    query: { id: id },
+  });
+};
+
+onMounted(async () => {
+  const userId = JSON.parse(localStorage.getItem('currentUser'));
+  await transactionStore.fetchDailyTransactions({
+    userId: userId,
+    date: dateParam.value,
+  });
 });
 
 // 수입/지출 분류
 const incomeItems = computed(() =>
-  props.transactions.filter((t) => t.type === 'income'),
+  transactionStore.dailyTransactions.filter((t) => t.type === 'income'),
 );
 const expenseItems = computed(() =>
-  props.transactions.filter((t) => t.type === 'expenditure'),
+  transactionStore.dailyTransactions.filter((t) => t.type === 'expenditure'),
 );
+
+// 날짜 포맷팅
+const formattedDate = computed(() => {
+  if (!dateParam.value) return '';
+  const dateObj = new Date(dateParam.value);
+  const week = ['일', '월', '화', '수', '목', '금', '토'];
+  return `${dateParam.value.replace(/-/g, '.')} (${week[dateObj.getDay()]})`;
+});
 </script>
 
 <style scoped>

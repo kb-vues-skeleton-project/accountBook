@@ -4,17 +4,77 @@ import { ref, computed } from 'vue';
 import axios from 'axios';
 
 export const useTransactionStore = defineStore('transaction', () => {
-  const transactions = ref([]);
+  const transactions = ref([]); // 달력 전체용
+  const dailyTransactions = ref([]); // 모달용 (하루치) 분리
+  const singleTransaction = ref({});
   const BASEURITransactions = '/api/transactions';
-  const fetchTransactions = async () => {
+
+  // 거래 내역 조회
+  const fetchTransactions = async ({
+    userId,
+    startDate,
+    endDate,
+    categoryId,
+    isStatic,
+  }) => {
     try {
-      const response = await axios.get(BASEURITransactions);
+      // userId 및 기간 조회(json-server 기준: date_gte(크거나 같음), date_lte(작거나 같음))
+      let url = `${BASEURITransactions}?userId=${userId}&date_gte=${startDate}&date_lte=${endDate}`;
+
+      // 카테고리별 조회
+      if (categoryId && categoryId !== 0) {
+        url += `&categoryId=${categoryId}`;
+      }
+
+      // 고정 지출별 조회
+      if (isStatic !== undefined && isStatic !== null) {
+        url += `&static=${isStatic}`;
+      }
+
+      const response = await axios.get(url);
       transactions.value = response.data;
     } catch (error) {
       console.error('거래 내역 로딩 실패:', error);
     }
   };
 
+  // 개별 id 조회
+  const idFetch = async (id) => {
+    try {
+      const url = `${BASEURITransactions}/${id}`;
+      const response = await axios.get(url);
+      singleTransaction.value = response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 거래 내역 수정
+  const updateTransaction = async (id, transaction) => {
+    try {
+      const response = await axios.put(
+        `${BASEURITransactions}/${id}`,
+        transaction,
+      );
+      const index = transactions.value.findIndex((t) => t.id === id);
+      transactions.value[index] = response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 개별 날짜 전용 조회 (dailyDetail용)
+  const fetchDailyTransactions = async ({ userId, date }) => {
+    try {
+      const url = `${BASEURITransactions}?userId=${userId}&date=${date}`;
+      const response = await axios.get(url);
+      dailyTransactions.value = response.data;
+    } catch (error) {
+      console.error('일일 상세 내역 로딩 실패:', error);
+    }
+  };
+
+  // 거래 내역 추가
   const addTransaction = async (newTransaction) => {
     try {
       const response = await axios.post(BASEURITransactions, newTransaction);
@@ -41,9 +101,14 @@ export const useTransactionStore = defineStore('transaction', () => {
 
   return {
     transactions,
+    dailyTransactions,
+    singleTransaction,
     totalAprilExpenditure,
     totalAprilIncome,
     fetchTransactions,
+    idFetch,
+    fetchDailyTransactions,
     addTransaction,
+    updateTransaction,
   };
 });
