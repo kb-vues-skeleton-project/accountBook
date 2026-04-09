@@ -41,9 +41,12 @@
         </div>
         <div class="cat-info">
           <span class="cat-name">{{ cat.name }}</span>
-          <span class="cat-type" :class="cat.type">{{
-            cat.type === 'income' ? '수입' : '지출'
-          }}</span>
+          <span
+            v-if="cat.type !== 'default'"
+            class="cat-type"
+            :class="cat.type"
+            >{{ cat.type === 'income' ? '수입' : '지출' }}</span
+          >
         </div>
         <button class="del-btn" @click="deleteCat(cat.id)">×</button>
       </div>
@@ -80,6 +83,10 @@ const handleSave = () => {
 
 // 카테고리 삭제
 const deleteCat = (id) => {
+  if (id === 1) {
+    alert('기본 카테고리는 삭제할 수 없습니다.');
+    return;
+  }
   categoryStore.deleteCategory(id);
 };
 </script>

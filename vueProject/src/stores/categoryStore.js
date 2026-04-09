@@ -30,6 +30,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     'utility.png',
   ]);
 
+  // 카테고리 조회
   const fetchCategories = async () => {
     try {
       const response = await axios.get(BASEURI);
