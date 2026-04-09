@@ -65,8 +65,8 @@
     </button>
   </div>
 
-  <div class="close-container">
-    <button type="button" class="btn-close" @click="CloseTransaction"></button>
+  <div>
+    <button type="button" @click="router.back()">돌아가기</button>
   </div>
 </template>
 
@@ -96,10 +96,6 @@ const filteredCategoryList = computed(() => {
 
 const AddCategory = () => {
   router.push('/category');
-};
-
-const CloseTransaction = () => {
-  router.push('/summary');
 };
 
 const type = ref('expenditure');

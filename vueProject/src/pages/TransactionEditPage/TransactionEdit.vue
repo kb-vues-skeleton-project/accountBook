@@ -104,12 +104,6 @@
           수정하기
         </button>
       </div>
-
-      <div class="close-container">
-        <button type="button" class="btn-close" @click="CloseTransaction">
-          취소
-        </button>
-      </div>
     </div>
 
     <div v-else>
@@ -170,8 +164,5 @@ const handleUpdate = async () => {
     console.error(error);
     alert('수정 중 오류가 발생했습니다.');
   }
-};
-const CloseTransaction = () => {
-  router.push('/summary');
 };
 </script>

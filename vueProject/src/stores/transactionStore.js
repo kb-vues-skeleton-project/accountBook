@@ -56,10 +56,8 @@ export const useTransactionStore = defineStore('transaction', () => {
         `${BASEURITransactions}/${id}`,
         transaction,
       );
-      if (response.status === 200) {
-        const index = transactions.value.findIndex((t) => t.id === id);
-        transactions.value[index] = response.data;
-      }
+      const index = transactions.value.findIndex((t) => t.id === id);
+      transactions.value[index] = response.data;
     } catch (err) {
       console.log(err);
     }
