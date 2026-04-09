@@ -2,11 +2,12 @@
   <div class="summary-page">
     <Goal :yearMonth="currMonth" />
     <Calendar @view-change="handleViewChange" /> <AddButton />
+    <RouterView />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useTransactionStore } from '@/stores/transactionStore';
 import { useGoalStore } from '@/stores/goalStore';
 
