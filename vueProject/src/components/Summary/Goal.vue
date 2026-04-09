@@ -1,18 +1,14 @@
 <template>
-  <div class="goal-container" v-if="goalStore.currentMonthGoal">
+  <div class="goal-container" v-if="currentGoal">
     <div class="header-stats">
       <div class="stat-item">
-        <span class="label">4월 지출 목표</span>
-        <span class="value"
-          >{{ goalStore.goalBalance.toLocaleString() }}원</span
-        >
+        <span class="label">{{ displayMonth }} 지출 목표</span>
+        <span class="value">{{ currentGoal.balance.toLocaleString() }}원</span>
       </div>
       <div class="stat-item">
         <span class="label">현재 사용 완료</span>
         <span class="value spend"
-          >-{{
-            (goalStore.currentMonthGoal.amount || 0).toLocaleString()
-          }}원</span
+          >-{{ goalStore.currentExpenditure.toLocaleString() }}원</span
         >
       </div>
     </div>
@@ -21,18 +17,17 @@
       <div class="progress-bar-container">
         <div
           class="progress-fill"
-          :style="{ width: goalStore.achievementRate + '%' }"
+          :style="{ width: achievementRate + '%' }"
         ></div>
       </div>
       <div class="progress-info">
         <span
-          >남은 사용 가능 금액:
-          <strong
-            >{{ goalStore.remainingBudget.toLocaleString() }}원</strong
-          ></span
+          >남은 금액:
+          <strong>{{ remainingBudget.toLocaleString() }}원</strong></span
         >
       </div>
     </div>
+
     <div class="alert-section" v-if="transactionStore.transactions.length > 0">
       <p class="alert-text">
         이번 달 과소비 금액은
@@ -40,6 +35,7 @@
       </p>
     </div>
   </div>
+  <div v-else class="no-goal">설정된 목표가 없습니다.</div>
 </template>
 
 <script setup>
@@ -47,12 +43,38 @@ import { computed } from 'vue';
 import { useGoalStore } from '@/stores/goalStore';
 import { useTransactionStore } from '@/stores/transactionStore';
 
+const props = defineProps({
+  yearMonth: String,
+});
+
 const goalStore = useGoalStore();
 const transactionStore = useTransactionStore();
 
+const currentGoal = computed(() => goalStore.currentMonthGoal);
+
+const displayMonth = computed(() => {
+  if (!props.yearMonth) return '';
+  return props.yearMonth.split('-')[1] + '월';
+});
+
+// 달성률 계산
+const achievementRate = computed(() => {
+  if (!currentGoal.value || currentGoal.value.balance === 0) return 0;
+  const rate = (goalStore.currentExpenditure / currentGoal.value.balance) * 100;
+  return Math.min(Math.round(rate), 100);
+});
+
+// 남은 예산
+const remainingBudget = computed(() => {
+  if (!currentGoal.value) return 0;
+  const rem = currentGoal.value.balance - goalStore.currentExpenditure;
+  return rem > 0 ? rem : 0;
+});
+
+// 과소비 (서버에서 이미 해당 월 데이터만 가져왔으므로 startsWith 없이 selfCheck만 확인)
 const overSpendAmount = computed(() => {
   return transactionStore.transactions
-    .filter((t) => t.date.startsWith('2026-04') && t.selfCheck === 3)
+    .filter((t) => t.selfCheck === 3)
     .reduce((acc, cur) => acc + cur.balance, 0);
 });
 </script>

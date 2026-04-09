@@ -1,12 +1,12 @@
 <template>
   <div class="summary-page">
-    <Goal />
+    <Goal :yearMonth="currMonth" />
     <Calendar @view-change="handleViewChange" /> <AddButton />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useTransactionStore } from '@/stores/transactionStore';
 import { useGoalStore } from '@/stores/goalStore';
 
@@ -18,13 +18,23 @@ const transactionStore = useTransactionStore();
 const goalStore = useGoalStore();
 const userId = JSON.parse(localStorage.getItem('currentUser'));
 
+const now = new Date();
+const currMonth = ref(
+  `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`,
+);
+
 // 달력 범위가 변경될 때 서버에서 데이터 fetch
 const handleViewChange = async ({ startDate, endDate }) => {
-  await transactionStore.fetchTransactions({
-    userId: userId,
-    startDate,
-    endDate,
-  });
+  currMonth.value = startDate.substring(0, 7);
+
+  await Promise.all([
+    transactionStore.fetchTransactions({
+      userId: userId,
+      startDate,
+      endDate,
+    }),
+    goalStore.fetchGoalByMonth(userId, currMonth.value.substring(2)),
+  ]);
 };
 
 // 초기 거래내역 호출
