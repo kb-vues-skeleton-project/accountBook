@@ -40,12 +40,11 @@
     <button type="button" @click="AddCategory">추가</button>
   </div>
 
-  <div id="static-container">
+  <div v-if="type === 'expenditure'" id="static-container">
     <label>
       <input type="checkbox" v-model="isStatic" />
       고정지출
     </label>
-    <!-- <span>({{ isStatic ? '고정지출' : '변동지출' }})</span> -->
   </div>
 
   <div>

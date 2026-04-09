@@ -4,7 +4,8 @@ import { ref, computed } from 'vue';
 import axios from 'axios';
 
 export const useTransactionStore = defineStore('transaction', () => {
-  const transactions = ref([]);
+  const transactions = ref([]); // 달력 전체용
+  const dailyTransactions = ref([]); // 모달용 (하루치) 분리
   const BASEURITransactions = '/api/transactions';
 
   // 거래 내역 조회
@@ -36,6 +37,17 @@ export const useTransactionStore = defineStore('transaction', () => {
     }
   };
 
+  // 개별 날짜 전용 조회 (dailyDetail용)
+  const fetchDailyTransactions = async ({ userId, date }) => {
+    try {
+      const url = `${BASEURITransactions}?userId=${userId}&date=${date}`;
+      const response = await axios.get(url);
+      dailyTransactions.value = response.data;
+    } catch (error) {
+      console.error('일일 상세 내역 로딩 실패:', error);
+    }
+  };
+
   // 거래 내역 추가
   const addTransaction = async (newTransaction) => {
     try {
@@ -63,9 +75,11 @@ export const useTransactionStore = defineStore('transaction', () => {
 
   return {
     transactions,
+    dailyTransactions,
     totalAprilExpenditure,
     totalAprilIncome,
     fetchTransactions,
+    fetchDailyTransactions,
     addTransaction,
   };
 });
