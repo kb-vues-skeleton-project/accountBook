@@ -4,4 +4,6 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
+
+//data들의 id를 숫자로 받아서 이름과 합을 받아서 표시!?

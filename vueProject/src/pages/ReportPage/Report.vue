@@ -1,22 +1,22 @@
 <template>
-  <div></div>
+  <div>
+    <!-- 고정지출 -->
+    <h4 class="fw=bold mb-1">
+      고정지출 <span>{{}}건</span><span>{{}}원</span>
+    </h4>
+    <!-- 고정지출 건수와 금액적어주면 됨 -->
+
+    <!--변동지출  -->
+    <h4 class="fw=bold mb-1">
+      변동지출 <span>{{}}건</span> <span>{{}}원</span>
+    </h4>
+
+    <!--카테고리별 지출 제목 -->
+  </div>
 </template>
 
-<script setup>
-import { useCounterStore } from '@/stores/counter';
-import { DoughnutChart } from 'vue-chart-3';
-import { Chart, registerables } from 'chart.js';
+<script setup></script>
 
-//chart.js 필요한 모듈만 등록함
-Chart.register(ArcElement, Tooltip, Legend, DatasetController);
+<style lang="scss" scoped></style>
 
-const doubleDoughnut = {
-  //1. 데이터 정의(안쪽 원, 바깥쪽 원)
-};
-
-const options = {};
-
-const store = useCounterStore();
-</script>
-
-<style scoped></style>
+//data들의 id를 숫자로 받아서 이름과 합을 받아서 표시!?
