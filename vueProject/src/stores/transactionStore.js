@@ -84,23 +84,6 @@ export const useTransactionStore = defineStore('transaction', () => {
     }
   };
 
-  const updateTransaction = async (id, updatedData) => {
-    try {
-      const response = await axios.put(
-        `${BASEURITransactions}/${id}`,
-        updatedData,
-      );
-      const index = state.transactions.findIndex((item) => item.id === id);
-      if (index !== -1) {
-        state.transactions[index] = response.data;
-      }
-      return true;
-    } catch (error) {
-      console.error('수정 실패 :', error);
-      return false;
-    }
-  };
-
   //..
   // [Summary용 가공 데이터] 4월 총 지출 합계
   const totalAprilExpenditure = computed(() => {
