@@ -5,11 +5,16 @@
         <span class="label">{{ displayMonth }} 지출 목표</span>
         <span class="value">{{ currentGoal.balance.toLocaleString() }}원</span>
       </div>
+
       <div class="stat-item">
-        <span class="label">현재 사용 완료</span>
-        <span class="value spend"
-          >-{{ goalStore.currentExpenditure.toLocaleString() }}원</span
-        >
+        <span class="label">사용 현황</span>
+        <div class="status-detail">
+          <span class="income">수입 {{ totalIncome.toLocaleString() }}원</span>
+          <span class="divider">/</span>
+          <span class="spend"
+            >지출 {{ goalStore.currentExpenditure.toLocaleString() }}원</span
+          >
+        </div>
       </div>
     </div>
 
@@ -21,10 +26,10 @@
         ></div>
       </div>
       <div class="progress-info">
-        <span
-          >남은 금액:
-          <strong>{{ remainingBudget.toLocaleString() }}원</strong></span
-        >
+        <span>
+          남은 금액:
+          <strong>{{ remainingBudget.toLocaleString() }}원</strong>
+        </span>
       </div>
     </div>
 
@@ -57,6 +62,13 @@ const displayMonth = computed(() => {
   return props.yearMonth.split('-')[1] + '월';
 });
 
+// 🍎 수입 합계 계산 (Store의 전체 내역에서 직접 필터링)
+const totalIncome = computed(() => {
+  return transactionStore.transactions
+    .filter((t) => t.type === 'income')
+    .reduce((acc, cur) => acc + cur.balance, 0);
+});
+
 // 달성률 계산
 const achievementRate = computed(() => {
   if (!currentGoal.value || currentGoal.value.balance === 0) return 0;
@@ -71,7 +83,7 @@ const remainingBudget = computed(() => {
   return rem > 0 ? rem : 0;
 });
 
-// 과소비 (서버에서 이미 해당 월 데이터만 가져왔으므로 startsWith 없이 selfCheck만 확인)
+// 과소비 내역
 const overSpendAmount = computed(() => {
   return transactionStore.transactions
     .filter((t) => t.selfCheck === 3)
@@ -80,31 +92,89 @@ const overSpendAmount = computed(() => {
 </script>
 
 <style scoped>
-/* 기존 Summary.vue에 있던 .goal-container, .header-stats 등 관련 스타일 이동 */
+.goal-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+/* 상단 2단 구조 */
 .header-stats {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
+  justify-content: space-between; /* 좌우 끝으로 배치 */
+  align-items: flex-start;
+  margin-bottom: 25px;
 }
+
 .stat-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
+/* 레이블(제목) 스타일 */
+.label {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* 큰 숫자 스타일 */
 .value {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  color: #333;
 }
+
+/* 수입/지출 현황 스타일 */
+.status-detail {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.income {
+  color: #03c75a; /* 초록색 */
+}
+
 .spend {
-  color: #ff4d4f;
+  color: #ff4d4f; /* 빨간색 */
 }
+
+.divider {
+  margin: 0 8px;
+  color: #ccc;
+}
+
+/* 게이지 바 */
 .progress-bar-container {
-  height: 12px;
+  height: 10px;
   background: #eee;
-  border-radius: 6px;
+  border-radius: 5px;
   overflow: hidden;
+  margin-bottom: 8px;
 }
+
 .progress-fill {
   height: 100%;
   background: #03c75a;
   transition: width 0.3s;
+}
+
+.progress-info {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.alert-section {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #fdf2f2;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.alert-text {
+  margin: 0;
+  font-size: 0.9rem;
 }
 </style>
