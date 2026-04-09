@@ -10,28 +10,78 @@
     }
   ],
   "category": [
-    { "id": 1, "name": "미분류", "image": "etc.png", "type": "expenditure" },
-    { "id": 2, "name": "식비", "image": "food.png", "type": "expenditure" },
-    { "id": 3, "name": "쇼핑", "image": "shopping.png", "type": "expenditure" },
-    { "id": 4, "name": "병원", "image": "hospital.png", "type": "expenditure" },
-    { "id": 5, "name": "여가", "image": "leisure.png", "type": "expenditure" },
+    {
+      "id": 1,
+      "name": "미분류",
+      "image": "etc.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 2,
+      "name": "식비",
+      "image": "food.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 3,
+      "name": "쇼핑",
+      "image": "shopping.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 4,
+      "name": "병원",
+      "image": "hospital.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 5,
+      "name": "여가",
+      "image": "leisure.png",
+      "type": "expenditure"
+    },
     {
       "id": 6,
       "name": "교통",
       "image": "transport.png",
       "type": "expenditure"
     },
-    { "id": 7, "name": "미용", "image": "beauty.png", "type": "expenditure" },
+    {
+      "id": 7,
+      "name": "미용",
+      "image": "beauty.png",
+      "type": "expenditure"
+    },
     {
       "id": 8,
       "name": "통신비",
       "image": "telecom.png",
       "type": "expenditure"
     },
-    { "id": 9, "name": "구독", "image": "sub.png", "type": "expenditure" },
-    { "id": 10, "name": "급여", "image": "salary.png", "type": "income" },
-    { "id": 11, "name": "용돈", "image": "allowance.png", "type": "income" },
-    { "id": 12, "name": "금융수입", "image": "finance.png", "type": "income" }
+    {
+      "id": 9,
+      "name": "구독",
+      "image": "sub.png",
+      "type": "expenditure"
+    },
+    {
+      "id": 10,
+      "name": "급여",
+      "image": "salary.png",
+      "type": "income"
+    },
+    {
+      "id": 11,
+      "name": "용돈",
+      "image": "allowance.png",
+      "type": "income"
+    },
+    {
+      "id": 12,
+      "name": "금융수입",
+      "image": "finance.png",
+      "type": "income"
+    }
   ],
   "goal": [
     {
@@ -59,7 +109,7 @@
       "name": "3월 급여",
       "method": "현금",
       "static": true,
-      "categoryId": "10",
+      "categoryId": 10,
       "memo": "정기 급여",
       "selfCheck": 1
     },
@@ -72,7 +122,7 @@
       "name": "통신비 정기결제",
       "method": "신용",
       "static": true,
-      "categoryId": "8",
+      "categoryId": 8,
       "memo": "SKT 요금",
       "selfCheck": 2
     },
@@ -85,7 +135,7 @@
       "name": "넷플릭스",
       "method": "신용",
       "static": true,
-      "categoryId": "9",
+      "categoryId": 9,
       "memo": "구독료",
       "selfCheck": 1
     },
@@ -98,7 +148,7 @@
       "name": "미용실 커트",
       "method": "체크",
       "static": false,
-      "categoryId": "7",
+      "categoryId": 7,
       "memo": "단골집",
       "selfCheck": 1
     },
@@ -111,7 +161,7 @@
       "name": "스타벅스",
       "method": "신용",
       "static": false,
-      "categoryId": "2",
+      "categoryId": 2,
       "memo": "친구랑 커피",
       "selfCheck": 2
     },
@@ -124,7 +174,7 @@
       "name": "백화점 쇼핑",
       "method": "신용",
       "static": false,
-      "categoryId": "3",
+      "categoryId": 3,
       "memo": "봄 셔츠 구매",
       "selfCheck": 3
     },
@@ -137,7 +187,7 @@
       "name": "시내버스",
       "method": "체크",
       "static": false,
-      "categoryId": "6",
+      "categoryId": 6,
       "memo": "출근길",
       "selfCheck": 2
     },
@@ -150,7 +200,7 @@
       "name": "내과 진료",
       "method": "신용",
       "static": false,
-      "categoryId": "4",
+      "categoryId": 4,
       "memo": "감기 기운",
       "selfCheck": 1
     },
@@ -163,7 +213,7 @@
       "name": "영화 및 팝콘",
       "method": "신용",
       "static": false,
-      "categoryId": "5",
+      "categoryId": 5,
       "memo": "주말 여가",
       "selfCheck": 1
     },
@@ -176,7 +226,7 @@
       "name": "김치찌개",
       "method": "신용",
       "static": false,
-      "categoryId": "2",
+      "categoryId": 2,
       "memo": "점심 식사",
       "selfCheck": 1
     },
@@ -189,7 +239,7 @@
       "name": "주식 배당금",
       "method": "현금",
       "static": false,
-      "categoryId": "12",
+      "categoryId": 12,
       "memo": "커피값 벌었다",
       "selfCheck": 1
     },
@@ -202,9 +252,45 @@
       "name": "편의점",
       "method": "체크",
       "static": false,
-      "categoryId": "2",
+      "categoryId": 2,
       "memo": "맥주 및 안주",
       "selfCheck": 3
+    },
+    {
+      "type": "expenditure",
+      "balance": 3,
+      "name": "dfds",
+      "categoryId": 1,
+      "date": "2026-04-08",
+      "memo": "dfsf",
+      "createdAt": 1775632913950,
+      "userId": "admin",
+      "id": 13
+    },
+    {
+      "createdAt": 1775634175815,
+      "userId": "admin",
+      "balance": 45000,
+      "type": "expenditure",
+      "date": "2026-04-08",
+      "name": "케이크 주문 제작",
+      "method": 3,
+      "static": false,
+      "categoryId": 1,
+      "memo": "계좌이체",
+      "id": 14
+    },
+    {
+      "userId": "admin",
+      "balance": 1000,
+      "type": "expenditure",
+      "date": "2026-04-07",
+      "name": "테스트",
+      "method": 1,
+      "static": true,
+      "categoryId": 3,
+      "memo": "",
+      "id": 15
     }
   ]
 }
