@@ -36,11 +36,6 @@ const handleViewChange = async ({ startDate, endDate }) => {
     goalStore.fetchGoalByMonth(userId, currMonth.value.substring(2)),
   ]);
 };
-
-// 초기 거래내역 호출
-onMounted(async () => {
-  await goalStore.fetchGoals();
-});
 </script>
 
 <style scoped>
