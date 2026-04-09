@@ -6,6 +6,7 @@ import axios from 'axios';
 export const useTransactionStore = defineStore('transaction', () => {
   const transactions = ref([]); // 달력 전체용
   const dailyTransactions = ref([]); // 모달용 (하루치) 분리
+  const singleTransaction = ref({});
   const BASEURITransactions = '/api/transactions';
 
   // 거래 내역 조회
@@ -34,6 +35,33 @@ export const useTransactionStore = defineStore('transaction', () => {
       transactions.value = response.data;
     } catch (error) {
       console.error('거래 내역 로딩 실패:', error);
+    }
+  };
+
+  // 개별 id 조회
+  const idFetch = async (id) => {
+    try {
+      const url = `${BASEURITransactions}/${id}`;
+      const response = await axios.get(url);
+      singleTransaction.value = response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // 거래 내역 수정
+  const updateTransaction = async (id, transaction) => {
+    try {
+      const response = await axios.put(
+        `${BASEURITransactions}/${id}`,
+        transaction,
+      );
+      if (response.status === 200) {
+        const index = transactions.value.findIndex((t) => t.id === id);
+        transactions.value[index] = response.data;
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -76,10 +104,13 @@ export const useTransactionStore = defineStore('transaction', () => {
   return {
     transactions,
     dailyTransactions,
+    singleTransaction,
     totalAprilExpenditure,
     totalAprilIncome,
     fetchTransactions,
+    idFetch,
     fetchDailyTransactions,
     addTransaction,
+    updateTransaction,
   };
 });

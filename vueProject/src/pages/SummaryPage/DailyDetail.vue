@@ -15,7 +15,7 @@
               <span class="amount income"
                 >+{{ item.balance.toLocaleString() }}원</span
               >
-              <button class="edit-btn" @click="editModal">✏️</button>
+              <button class="edit-btn" @click="editModal(item.id)">✏️</button>
             </li>
           </ul>
         </div>
@@ -28,7 +28,7 @@
               <span class="amount expense"
                 >-{{ item.balance.toLocaleString() }}원</span
               >
-              <button class="edit-btn" @click="editModal">✏️</button>
+              <button class="edit-btn" @click="editModal(item.id)">✏️</button>
             </li>
           </ul>
         </div>
@@ -59,8 +59,11 @@ const closeModal = () => {
   router.push('/summary');
 };
 
-const editModal = () => {
-  router.push('/transactionEdit');
+const editModal = (id) => {
+  router.push({
+    path: '/transactionEdit',
+    query: { id: id },
+  });
 };
 
 onMounted(async () => {
