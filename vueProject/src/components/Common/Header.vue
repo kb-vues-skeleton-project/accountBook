@@ -74,4 +74,27 @@ const logOut = () => {
   color: #333;
   font-size: 0.9rem;
 }
+
+button {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #ff4d4f; /* 마우스 올리면 경고 의미의 빨간색 계열 */
+  color: white;
+  border-color: #ff4d4f;
+}
+
+.user-name {
+  margin-left: 10px;
+  color: #333;
+  font-size: 0.9rem;
+}
 </style>
