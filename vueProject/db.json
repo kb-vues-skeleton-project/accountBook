@@ -7,6 +7,30 @@
       "name": "홍길동",
       "phoneNum": "010-1234-5678",
       "birthday": "06-10-10"
+    },
+    {
+      "userId": "ads",
+      "password": "asd",
+      "name": "asd",
+      "phoneNum": "asd",
+      "birthday": "00-01-01",
+      "id": "JYx2oGL"
+    },
+    {
+      "userId": "zxc",
+      "password": "zxc",
+      "name": "zxc",
+      "phoneNum": "zxc",
+      "birthday": "00-01-01",
+      "id": "fPV144W"
+    },
+    {
+      "userId": "zxc",
+      "password": "zxc",
+      "name": "zxc",
+      "phoneNum": "zxc",
+      "birthday": "00-01-01",
+      "id": "pUT_TKJ"
     }
   ],
   "category": [

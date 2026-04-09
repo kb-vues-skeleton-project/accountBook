@@ -6,6 +6,7 @@ import axios from 'axios';
 export const useTransactionStore = defineStore('transaction', () => {
   const transactions = ref([]);
   const BASEURITransactions = '/api/transactions';
+
   const fetchTransactions = async () => {
     try {
       const response = await axios.get(BASEURITransactions);
@@ -39,11 +40,51 @@ export const useTransactionStore = defineStore('transaction', () => {
       .reduce((acc, cur) => acc + cur.balance, 0);
   });
 
+  // [Summary용 가공 데이터] 4월 총 고정지출
+  const totalAprilFixedExpenditure = computed(() => {
+    return transactions.value
+      .filter(
+        (t) =>
+          t.date.startsWith('2026-04') &&
+          t.type === 'expenditure' &&
+          t.static === false,
+      )
+      .reduce((acc, cur) => acc + cur.balance, 0);
+  });
+  // [Summary용 가공 데이터] 4월 총 변동지출
+  const totalAprilChangeExpenditure = computed(() => {
+    return transactions.value
+      .filter(
+        (t) =>
+          t.date.startsWith('2026-04') &&
+          t.type === 'expenditure' &&
+          t.static === true,
+      )
+      .reduce((acc, cur) => acc + cur.balance, 0);
+  });
+  //4월 내용 정렬?
+  const getExpenditureSumByCategory = () => {
+    return transactions.value
+      .filter((t) => t.date.startsWith('2026-04') && t.type === 'expenditure')
+      .reduce((acc, t) => {
+        // 해당 카테고리 ID가 처음 등장하면 0으로 초기화
+        if (!acc[t.categoryId]) {
+          acc[t.categoryId] = 0;
+        }
+        // 금액(balance) 합산
+        acc[t.categoryId] += t.balance;
+        return acc;
+      }, {}); // 최종 결과 형태: { "1": 5000, "2": 10800 }
+  };
+
   return {
     transactions,
     totalAprilExpenditure,
     totalAprilIncome,
     fetchTransactions,
     addTransaction,
+    totalAprilFixedExpenditure,
+    totalAprilChangeExpenditure,
+    getExpenditureSumByCategory,
   };
 });
