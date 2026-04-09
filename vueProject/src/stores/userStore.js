@@ -23,7 +23,9 @@ export const useUserStore = defineStore('userStore', () => {
 
   // ID 중복 확인
   const isIdDuplicate = (userId) => {
-    return state.users.some((user) => user.userId === userId);
+    return state.users.some(
+      (user) => String(user.userId).trim() === String(userId).trim(),
+    );
   };
 
   // 회원가입
