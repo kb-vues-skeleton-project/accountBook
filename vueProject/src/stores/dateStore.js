@@ -14,7 +14,6 @@ export const useDateStore = defineStore('date', () => {
   // 초기값을 오늘 날짜로 설정
   const selectedDate = ref(getToday());
 
-  // 연-월 추출 (예: '26-04')
   const yearMonth = computed(() => selectedDate.value.substring(0, 7));
 
   // 날짜 변경

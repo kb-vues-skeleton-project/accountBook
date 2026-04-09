@@ -9,28 +9,12 @@
       "birthday": "06-10-10"
     },
     {
-      "userId": "ads",
-      "password": "asd",
-      "name": "asd",
-      "phoneNum": "asd",
+      "userId": "admin9",
+      "password": "1111",
+      "name": "한채연",
+      "phoneNum": "",
       "birthday": "00-01-01",
-      "id": "JYx2oGL"
-    },
-    {
-      "userId": "zxc",
-      "password": "zxc",
-      "name": "zxc",
-      "phoneNum": "zxc",
-      "birthday": "00-01-01",
-      "id": "fPV144W"
-    },
-    {
-      "userId": "zxc",
-      "password": "zxc",
-      "name": "zxc",
-      "phoneNum": "zxc",
-      "birthday": "00-01-01",
-      "id": "pUT_TKJ"
+      "id": "Ya8Gcsz"
     }
   ],
   "category": [
@@ -38,7 +22,7 @@
       "id": 1,
       "name": "미분류",
       "image": "etc.png",
-      "type": "expenditure"
+      "type": "default"
     },
     {
       "id": 2,
@@ -315,6 +299,54 @@
       "categoryId": 3,
       "memo": "",
       "id": 15
+    },
+    {
+      "userId": "admin",
+      "balance": 5,
+      "type": "expenditure",
+      "date": "2026-04-09",
+      "name": "dsfs",
+      "method": 1,
+      "static": true,
+      "categoryId": 1,
+      "memo": "",
+      "id": 16
+    },
+    {
+      "userId": "admin9",
+      "balance": 5,
+      "type": "expenditure",
+      "date": "2026-04-09",
+      "name": "dfdsdfsfas",
+      "method": 2,
+      "static": false,
+      "categoryId": 3,
+      "memo": "fsdfdsfsadfsdfsdf",
+      "id": 17
+    },
+    {
+      "userId": "admin9",
+      "balance": 25,
+      "type": "income",
+      "date": "2026-04-09",
+      "name": "지원금",
+      "method": 3,
+      "static": false,
+      "categoryId": 10,
+      "memo": "나머지 언제주냐..",
+      "id": 18
+    },
+    {
+      "userId": "admin9",
+      "balance": 3000,
+      "type": "expenditure",
+      "date": "2026-04-09",
+      "name": "매머드커피",
+      "method": 2,
+      "static": false,
+      "categoryId": 2,
+      "memo": "아아맛있다",
+      "id": 19
     }
   ]
 }
