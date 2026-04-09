@@ -10,6 +10,7 @@
         <RouterLink :to="{ name: 'trade' }">거래 내역</RouterLink>
         <RouterLink :to="{ name: 'report' }">소비 리포트</RouterLink>
       </nav>
+      <button @click="logOut">로그아웃</button>
     </div>
   </header>
 </template>
@@ -17,9 +18,17 @@
 <script setup>
 import { useUserStore } from '@/stores/userStore';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const userStore = useUserStore();
 const isLogIn = computed(() => !!userStore.state.currentUser);
+
+const logOut = () => {
+  localStorage.removeItem('currentUser');
+  userStore.state.currentUser = null;
+  router.push('/');
+};
 </script>
 
 <style scoped>
