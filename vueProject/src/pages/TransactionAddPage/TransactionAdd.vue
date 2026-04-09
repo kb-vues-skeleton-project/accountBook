@@ -14,7 +14,7 @@
   <div id="method-container">
     <label>결제수단</label>
     <select v-model="method">
-      <option value="0">-- 선택하세요 --</option>
+      <option value="0" disabled>-- 결제수단 선택 --</option>
       <option value="1">신용</option>
       <option value="2">체크</option>
       <option value="3">현금</option>
@@ -28,14 +28,11 @@
 
   <div id="categoryId-container">
     <label>카테고리</label>
-    <!-- 상단 수입 지출 선택에 따라 카테고리도 다르게 나오도록 해야할거같음 -->
     <select v-model="categoryId">
-      <option value="0">-- 카테고리 --</option>
-      <option value="1">미분류</option>
-      <option value="2">식비</option>
-      <option value="3">쇼핑</option>
-      <option value="4">병원</option>
-      <option value="5">여가</option>
+      <option value="0" disabled>-- 카테고리 선택 --</option>
+      <option v-for="cat in filteredCategoryList" :key="cat.id" :value="cat.id">
+        {{ cat.name }}
+      </option>
     </select>
   </div>
 
@@ -75,12 +72,28 @@
 </template>
 
 <script setup>
+import { useCategoryStore } from '@/stores/categoryStore';
+import { useDateStore } from '@/stores/dateStore';
 import { useTransactionStore } from '@/stores/transactionStore';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const transactionStore = useTransactionStore();
+const categoryStore = useCategoryStore();
+const dateStore = useDateStore();
+
+// 페이지 로드 시 카테고리 가져오기
+onMounted(() => {
+  categoryStore.fetchCategories();
+});
+
+const filteredCategoryList = computed(() => {
+  return categoryStore.state.categories.filter(
+    (cat) => cat.type === type.value || cat.type === 'default',
+  );
+});
+////////////////////
 
 const AddCategory = () => {
   router.push('/category');
@@ -93,10 +106,10 @@ const CloseTransaction = () => {
 const type = ref('expenditure');
 const balance = ref(0);
 const name = ref('');
-const categoryId = ref(0);
-const date = ref(new Date().toISOString().substr(0, 10));
+const categoryId = ref(1);
+const date = ref(dateStore.selectedDate);
 const memo = ref('');
-const method = ref(0);
+const method = ref(1);
 const isStatic = ref(false);
 
 const saveTransaction = async () => {
@@ -114,7 +127,7 @@ const saveTransaction = async () => {
   }
 
   const newTransaction = {
-    userId: 'admin',
+    userId: JSON.parse(localStorage.getItem('currentUser')),
     balance: balance.value,
     type: type.value,
     date: date.value,
