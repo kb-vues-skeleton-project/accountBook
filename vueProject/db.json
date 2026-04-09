@@ -15,6 +15,14 @@
       "phoneNum": "",
       "birthday": "00-01-01",
       "id": "Ya8Gcsz"
+    },
+    {
+      "userId": "admin1001",
+      "password": "1234",
+      "name": "배고픈사람",
+      "phoneNum": "010-1234-5678",
+      "birthday": "03-10-01",
+      "id": "tZzV_DV"
     }
   ],
   "category": [
@@ -22,7 +30,7 @@
       "id": 1,
       "name": "미분류",
       "image": "etc.png",
-      "type": "default"
+      "type": "expenditure"
     },
     {
       "id": 2,
