@@ -2,14 +2,14 @@
   <div class="goal-container" v-if="currentGoal">
     <div class="header-stats">
       <div class="stat-item clickable" @click="goToGoalEdit">
-        <span class="label">{{ displayMonth }} 지출 목표</span>
+        <span class="label">{{ displayMonth }} 지출 목표🎯</span>
         <span class="value">
           {{ currentGoal?.balance?.toLocaleString() || 0 }}원
         </span>
       </div>
 
       <div class="stat-item">
-        <span class="label">사용 현황</span>
+        <span class="label">현황 요약💸</span>
         <div class="status-detail">
           <span class="income">수입 {{ totalIncome.toLocaleString() }}원</span>
           <span class="divider">/</span>
@@ -29,6 +29,10 @@
       </div>
       <div class="progress-info">
         <span>
+          현재 지출:
+          <strong>{{ remainingBudget.toLocaleString() }}원 / </strong>
+        </span>
+        <span>
           남은 금액:
           <strong>{{ remainingBudget.toLocaleString() }}원</strong>
         </span>
@@ -38,11 +42,13 @@
     <div class="alert-section" v-if="transactionStore.transactions.length > 0">
       <p class="alert-text">
         이번 달 과소비 금액은
-        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요. 💸
+        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요.💸
       </p>
     </div>
   </div>
-  <div v-else class="no-goal">설정된 목표가 없습니다.</div>
+  <div v-else class="no-goal" @click="goToGoalEdit">
+    설정된 지출 목표가 없습니다. (클릭하여 설정)
+  </div>
 </template>
 
 <script setup>
@@ -124,8 +130,8 @@ const overSpendAmount = computed(() => {
 
 /* 레이블(제목) 스타일 */
 .label {
-  font-size: 0.9rem;
-  color: #888;
+  font-size: 1.1rem;
+  color: #fff;
 }
 
 /* 큰 숫자 스타일 */
@@ -242,7 +248,7 @@ const overSpendAmount = computed(() => {
 
 /* 3. 남색 배경 안의 글자색 강제 지정 */
 .stat-item.clickable .label {
-  color: rgba(255, 255, 255, 0.8); /* 약간 투명한 흰색으로 고급스럽게 */
+  color: white; /* 약간 투명한 흰색으로 고급스럽게 */
 }
 
 .stat-item.clickable .value {
