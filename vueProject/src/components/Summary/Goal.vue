@@ -28,12 +28,14 @@
         ></div>
       </div>
       <div class="progress-info">
-        <span>
+        <span class="current-expense">
           현재 지출:
-          <strong>{{ remainingBudget.toLocaleString() }}원 / </strong>
+          <strong
+            >{{ goalStore.currentExpenditure.toLocaleString() }}원
+          </strong>
         </span>
         <span>
-          남은 금액:
+          사용 가능 금액:
           <strong>{{ remainingBudget.toLocaleString() }}원</strong>
         </span>
       </div>
@@ -42,7 +44,8 @@
     <div class="alert-section" v-if="transactionStore.transactions.length > 0">
       <p class="alert-text">
         이번 달 과소비 금액은
-        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요.💸
+        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요.💸 (총
+        지출의 {{ overSpendRate }}%)
       </p>
     </div>
   </div>
@@ -99,11 +102,21 @@ const remainingBudget = computed(() => {
   return rem > 0 ? rem : 0;
 });
 
-// 과소비 내역
+// 과소비 금액 합산
 const overSpendAmount = computed(() => {
   return transactionStore.transactions
     .filter((t) => t.selfCheck === 3)
     .reduce((acc, cur) => acc + cur.balance, 0);
+});
+// 과소비 비율(과소비/총소비)
+const overSpendRate = computed(() => {
+  const total = goalStore.currentExpenditure;
+  const over = overSpendAmount.value;
+  if (total === 0) return 0; // 지출이 없으면 0%
+
+  // 소수점 첫째 자리까지 반올림하여 계산
+  const rate = (over / total) * 100;
+  return rate.toFixed(1);
 });
 </script>
 
@@ -277,5 +290,9 @@ const overSpendAmount = computed(() => {
 
 .no-goal:hover {
   background-color: #144a7d; /* 호버 시 약간 더 진하게 */
+}
+
+.current-expense {
+  float: left;
 }
 </style>
