@@ -9,7 +9,7 @@
           <div class="id-input-wrapper">
             <input
               type="text"
-              v-model="userData.userId"
+              v-model="userData.uId"
               @keyup.enter="checkId"
               class="input-field"
               placeholder="ID 입력"
@@ -113,7 +113,8 @@ const passwordConfirm = ref(''); // 비번 확인
 const isIdChecked = ref(false); // 중복확인
 
 const userData = reactive({
-  userId: '',
+  id: userStore.state.length,
+  uId: '',
   password: '',
   name: '',
   phoneNum: '',
@@ -154,7 +155,7 @@ const checkId = async () => {
   await userStore.fetchUsers(); //서버에서 최신 유저 리스트를 가져올 때까지 기다림
   console.log(userStore.state.users);
 
-  if (userStore.isIdDuplicate(userData.userId)) {
+  if (userStore.isIdDuplicate(userData.uId)) {
     alert('중복된 아이디입니다.');
     isIdChecked.value = false;
   } else {
