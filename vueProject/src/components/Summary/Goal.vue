@@ -161,7 +161,7 @@ const overSpendRate = computed(() => {
 }
 
 .income {
-  color: #03c75a; /* 초록색 */
+  color: #1a5c9c;
 }
 
 .spend {
@@ -270,7 +270,7 @@ const overSpendRate = computed(() => {
 
 /* 4. 사용 현황(오른쪽) 글자색 원래대로 (배경이 흰색이니까) */
 .stat-item:not(.clickable) .label {
-  color: #888;
+  color: #373737;
 }
 
 .stat-item:not(.clickable) .value {

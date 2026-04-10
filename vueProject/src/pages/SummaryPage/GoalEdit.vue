@@ -26,18 +26,40 @@ const adjustBalance = (amount) => {
 
 const handleSave = async () => {
   let result;
-  if (isNewGoal.value) {
-    // 신규 저장 로직 (Store에 addGoal 함수가 있다고 가정)
-    // result = await goalStore.addGoal(editBalance.value);
-    alert('신규 목표가 설정되었습니다! (기능 구현 필요)');
-  } else {
-    const goalId = goalStore.currentMonthGoal.id;
-    result = await goalStore.updateGoal(goalId, editBalance.value);
-    if (result.success) {
-      alert('목표가 수정되었습니다! 🎯');
+
+  try {
+    if (isNewGoal.value) {
+      // 1. 신규 목표 등록
+      const uId = 'user1'; // 고정값 대신 실제 유저 ID 연동 권장
+      const yearMonth = '2026-04'; // 고정값 대신 props.yearMonth 사용 권장
+
+      result = await goalStore.createGoal(uId, yearMonth, editBalance.value);
+
+      // 등록 실패 시, 이미 데이터가 존재할 가능성을 고려하여 업데이트 시도
+      if (result && !result.success) {
+        const goalId = goalStore.currentMonthGoal?.id;
+        if (goalId) {
+          result = await goalStore.updateGoal(goalId, editBalance.value);
+        }
+      }
+    } else {
+      // 2. 기존 목표 수정
+      const goalId = goalStore.currentMonthGoal?.id;
+      if (goalId) {
+        result = await goalStore.updateGoal(goalId, editBalance.value);
+      }
     }
+
+    // 최종 결과 처리
+    if (result?.success) {
+      router.push({ name: 'summary' });
+    } else {
+      alert('저장에 실패했습니다. 다시 시도해 주세요.');
+    }
+  } catch (error) {
+    console.error('Goal 처리 중 예외 발생:', error);
+    alert('시스템 에러가 발생했습니다.');
   }
-  router.push({ name: 'summary' }); // 닫고 부모로 돌아가기
 };
 </script>
 
