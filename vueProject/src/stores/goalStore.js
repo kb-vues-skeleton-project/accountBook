@@ -73,6 +73,25 @@ export const useGoalStore = defineStore('goal', () => {
     }
   };
 
+  const createGoal = async (uId, yearMonth, newBalance) => {
+    try {
+      // 1. 서버(DB)에 새 목표 생성 (POST)
+      const response = await axios.post(BASEURIGoal, {
+        uId: uId,
+        date: yearMonth,
+        balance: newBalance,
+      });
+
+      // 2. 스토어 상태 업데이트
+      currentMonthGoal.value = response.data;
+
+      return { success: true };
+    } catch (error) {
+      console.error('신규 목표 설정 실패:', error);
+      return { success: false };
+    }
+  };
+
   return {
     currentMonthGoal,
     fetchGoalByMonth,
@@ -81,5 +100,6 @@ export const useGoalStore = defineStore('goal', () => {
     achievementRate,
     remainingBudget,
     updateGoal,
+    createGoal,
   };
 });
