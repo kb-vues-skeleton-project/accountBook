@@ -9,26 +9,27 @@ export const useTransactionStore = defineStore('transaction', () => {
   const singleTransaction = ref({});
   const BASEURITransactions = '/api/transactions';
 
-  // 거래 내역 조회
-  const fetchTransactions = async ({
-    uId,
-    startDate,
-    endDate,
-    cId,
-    isStatic,
-  }) => {
+  const fetchTransactions = async ({ uId, startDate, endDate, cId, type }) => {
     try {
-      // uId 및 기간 조회(json-server 기준: date_gte(크거나 같음), date_lte(작거나 같음))
-      let url = `${BASEURITransactions}?uId=${uId}&date_gte=${startDate}&date_lte=${endDate}`;
+      const params = new URLSearchParams({
+        uId: uId,
+        date_gte: startDate,
+        date_lte: endDate,
+        _sort: 'date', // 날짜별 정렬
+        _order: 'desc', // 내림차순
+      });
 
-      // 카테고리별 조회
-      if (cId && cId !== 0) {
-        url += `&cId=${cId}`;
+      // 타입 필터 (income / expenditure)
+      if (type) {
+        params.append('type', type);
       }
 
-      // 고정 지출별 조회
-      if (isStatic !== undefined && isStatic !== null) {
-        url += `&static=${isStatic}`;
+      let url = `${BASEURITransactions}?${params.toString()}`;
+
+      // 카테고리 다중 필터 (cId=1&cId=2...)
+      if (cId && Array.isArray(cId) && cId.length > 0) {
+        const categoryQuery = cId.map((id) => `&cId=${id}`).join('');
+        url += categoryQuery;
       }
 
       const response = await axios.get(url);

@@ -2,18 +2,27 @@
   <div class="transaction-list-container">
     <header class="page-header">
       <h2 class="page-title">거래내역</h2>
-      <p class="current-month">
-        {{ currentYM.split('-')[0] }}년 {{ currentYM.split('-')[1] }}월
-      </p>
-    </header>
 
+      <div class="month-controller">
+        <button class="nav-btn" @click="changeMonth(-1)">
+          <i class="bi bi-chevron-left">&lt;</i>
+        </button>
+        <p class="current-month">
+          {{ currentYM.split('-')[0] }}년 {{ currentYM.split('-')[1] }}월
+        </p>
+        <button class="nav-btn" @click="changeMonth(1)">
+          <i class="bi bi-chevron-right">&gt;</i>
+        </button>
+      </div>
+    </header>
+    <!--- 카테고리 선택자 -->
+    <CategorySelect @filter="handleFilter" />
     <div
       v-if="Object.keys(groupedTransactions).length === 0"
       class="empty-state"
     >
-      <p>이번 달 거래 내역이 없습니다.</p>
+      <p>{{ currentYM.split('-')[1] }}월 거래 내역이 없습니다.</p>
     </div>
-
     <div
       v-for="(items, date) in groupedTransactions"
       :key="date"
@@ -35,48 +44,69 @@
 </template>
 
 <script setup>
-// import CategorySelect from '@/components/TransactionList/CategorySelect.vue';
-import TransactionItem from '@/components/TransactionList/TransactionItem.vue';
 import { useTransactionStore } from '@/stores/transactionStore';
 import { useCategoryStore } from '@/stores/categoryStore';
-import { computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import AddButton from '@/components/Summary/AddButton.vue';
+import CategorySelect from '@/components/TransactionList/CategorySelect.vue';
+import TransactionItem from '@/components/TransactionList/TransactionItem.vue';
 
 const transactionStore = useTransactionStore();
 const categoryStore = useCategoryStore();
 const uId = JSON.parse(localStorage.getItem('currentUser'));
+const filterState = ref({ type: null, cIds: [] });
 
-// 날짜 포맷팅
-const getYearMonth = () => {
-  const d = new Date();
-  const yy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  return `${yy}-${mm}`;
+// 선택된 날짜
+const d = new Date();
+const currentYM = ref(
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`,
+);
+
+// 필터 적용 핸들러
+const handleFilter = (payload) => {
+  filterState.value = payload; // { type: 'income', cIds: [1, 2] }
+  loadData();
 };
 
-const currentYM = getYearMonth();
-const startDate = `${currentYM}-01`;
-const endDate = `${currentYM}-31`; // 실제론 월말 날짜 계산이 필요하지만 일단 유지)
-
-onMounted(async () => {
-  await categoryStore.fetchCategories();
+// 데이터 호출
+const loadData = async () => {
+  const [year, month] = currentYM.value.split('-');
+  const lastDay = new Date(year, month, 0).getDate();
 
   await transactionStore.fetchTransactions({
     uId,
-    startDate,
-    endDate,
+    startDate: `${currentYM.value}-01`,
+    endDate: `${currentYM.value}-${lastDay}`,
+    cId: filterState.value.cIds, // 다중 ID 배열 전달
+    type: filterState.value.type, // 타입(수입/지출) 전달
   });
+};
+onMounted(async () => {
+  await categoryStore.fetchCategories();
+  await loadData();
 });
 
-//  그룹화 + 내림차순 정렬
-const groupedTransactions = computed(() => {
-  // 내림차순 정렬
-  const sorted = [...transactionStore.transactions].sort((a, b) => {
-    return new Date(b.date) - new Date(a.date);
-  });
+// 월 변경 함수
+const changeMonth = (delta) => {
+  const [year, month] = currentYM.value.split('-').map(Number);
+  const newDate = new Date(year, month - 1 + delta, 1);
 
+  const newYear = newDate.getFullYear();
+  const newMonth = String(newDate.getMonth() + 1).padStart(2, '0');
+
+  currentYM.value = `${newYear}-${newMonth}`;
+};
+
+// currentYM이 변하면 데이터를 자동으로 다시 불러옴
+watch(currentYM, () => {
+  loadData();
+});
+
+// 그룹화 + 내림차순 정렬 (기존 로직 유지)
+const groupedTransactions = computed(() => {
   const groups = {};
-  sorted.forEach((item) => {
+
+  transactionStore.transactions.forEach((item) => {
     if (!groups[item.date]) {
       groups[item.date] = [];
     }
@@ -86,7 +116,6 @@ const groupedTransactions = computed(() => {
   return groups;
 });
 
-// 날짜 포맷팅용 함수
 const formatDate = (dateStr) => {
   const d = new Date(dateStr.replace(/-/g, '/'));
   const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -95,6 +124,42 @@ const formatDate = (dateStr) => {
 </script>
 
 <style scoped>
+.month-controller {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #4e5968;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #1a5c9c;
+  color: #1a5c9c;
+}
+
+.current-month {
+  font-size: 24px;
+  color: #1a5c9c;
+  font-weight: 800;
+  margin: 0;
+  min-width: 150px;
+  text-align: center;
+}
 /* 컨테이너: 좌우 꽉 채우기 */
 .transaction-list-container {
   width: 100%;
