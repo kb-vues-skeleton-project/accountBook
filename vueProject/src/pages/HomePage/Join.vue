@@ -196,7 +196,7 @@ const handleSignUp = () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f6f9;
+  background-color: #f8f9fa; /* 배경색 통일 */
   padding: 20px;
   font-family:
     'Pretendard',
@@ -207,27 +207,28 @@ const handleSignUp = () => {
 /* 회원가입 카드 박스 */
 .signup-card {
   width: 100%;
-  max-width: 450px;
+  max-width: 440px;
   background: #ffffff;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 40px 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
 }
 
 /* 제목 스타일 */
 .form-title {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 30px;
-  color: #333;
+  margin-bottom: 35px;
+  color: #191f28;
+  letter-spacing: -0.5px;
 }
 
 /* 폼 본문 내부 간격 */
 .form-body {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 /* 각 입력 항목 줄(Wrapper) */
@@ -241,34 +242,38 @@ const handleSignUp = () => {
 .input-label {
   font-size: 14px;
   font-weight: 700;
-  color: #555;
-  margin-left: 4px;
+  color: #4e5968;
+  margin-left: 2px;
 }
 
 /* 입력창 및 셀렉트 박스 공통 디자인 */
 .input-field,
 .select-field {
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e5e8eb;
+  border-radius: 14px;
   font-size: 15px;
-  background-color: #fafafa;
-  transition: all 0.2s;
+  color: #333d4b;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.input-field::placeholder {
+  color: #adb5bd;
 }
 
 .input-field:focus,
 .select-field:focus {
   outline: none;
-  border-color: #007bff;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #1a5c9c; /* 테마 컬러 적용 */
+  box-shadow: 0 0 0 4px rgba(26, 92, 156, 0.1);
 }
 
 /* 아이디 입력창과 중복 확인 버튼 배치 */
 .id-input-wrapper {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .id-input-wrapper .input-field {
@@ -277,20 +282,20 @@ const handleSignUp = () => {
 
 /* 중복 확인 버튼 */
 .btn-sub {
-  padding: 0 15px;
-  background-color: #333;
-  color: white;
+  padding: 0 18px;
+  background-color: #f2f4f6;
+  color: #4e5968;
   border: none;
   border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
 }
 
 .btn-sub:hover {
-  opacity: 0.9;
+  background-color: #e5e8eb;
 }
 
 /* 생년월일 셀렉트 그룹 가로 배치 */
@@ -301,39 +306,69 @@ const handleSignUp = () => {
 
 .birth-select-group .select-field {
   flex: 1;
+  /* 브라우저 기본 화살표 스타일 제거 (선택사항) */
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b95a1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
 /* 비밀번호 일치하지 않습니다 메시지 */
 .error-msg {
-  color: #ff4d4f;
-  font-size: 12px;
+  color: #f04452;
+  font-size: 13px;
   font-weight: 500;
-  margin-top: -6px;
-  padding-left: 4px;
+  margin-top: 2px;
+  padding-left: 2px;
 }
 
 /* 하단 회원가입 버튼 */
 .btn-main {
   width: 100%;
-  padding: 16px;
+  padding: 18px;
   border: none;
-  border-radius: 15px;
+  border-radius: 18px;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 700;
   color: white;
-  background-color: #007bff;
+  background-color: #1a5c9c; /* 테마 컬러 적용 */
   cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.2s;
+  margin-top: 15px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-main:disabled {
-  background-color: #d1d5db;
-  color: #9ca3af;
+  background-color: #e5e8eb;
+  color: #adb5bd;
   cursor: not-allowed;
 }
 
 .btn-main:not([disabled]):hover {
-  background-color: #0056b3;
+  background-color: #14497a;
+  transform: translateY(-1px);
+}
+
+.btn-main:active {
+  transform: scale(0.98);
+}
+
+/* 반응형 모바일 설정 */
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 30px 20px;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+  }
+
+  .signup-page {
+    background-color: #ffffff;
+    padding: 0;
+  }
+
+  .form-title {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
 }
 </style>
