@@ -113,6 +113,7 @@ const passwordConfirm = ref(''); // 비번 확인
 const isIdChecked = ref(false); // 중복확인
 
 const userData = reactive({
+  id: userStore.state.length,
   userId: '',
   password: '',
   name: '',
