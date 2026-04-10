@@ -70,29 +70,40 @@ const goToEdit = () => {
 };
 </script>
 
+<
 <style scoped>
 .item-card {
   display: flex;
   align-items: center;
   background-color: #ffffff;
-  padding: 16px 20px;
-  margin-bottom: 12px;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f0f0f0;
+  /* 데스크톱에서 보기 편하도록 패딩과 높이 상향 */
+  padding: 20px 28px;
+  border-radius: 18px;
+  /* 테마 컬러를 활용한 아주 은은한 그림자 */
+  box-shadow: 0 4px 12px rgba(26, 92, 156, 0.06);
+  border: 1px solid #f1f3f5;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* 왼쪽: 아이콘 영역 */
+.item-card:hover {
+  border-color: #1a5c9c;
+  background-color: #f9fbff;
+}
+
+/* 아이콘 영역 */
 .category-icon-area {
   flex-shrink: 0;
-  margin-right: 15px;
+  margin-right: 20px;
 }
 
 .circle-placeholder {
-  width: 50px;
-  height: 50px;
-  background-color: #f5f5f5;
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  background-color: #f0f4f8; /* 테마 컬러 톤의 연한 배경 */
+  border-radius: 16px; /* 완전 원형보다 트렌디한 스쿼클 형태 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,77 +111,92 @@ const goToEdit = () => {
 }
 
 .circle-placeholder img {
-  width: 60%;
-  height: 60%;
+  width: 65%;
+  height: 65%;
   object-fit: contain;
 }
 
-/* 중간: 텍스트 영역 */
+/* 텍스트 영역 */
 .content-area {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .name {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
+  font-size: 18px; /* 폰트 크기 키움 */
+  font-weight: 700;
+  color: #191f28;
 }
 
 .category-name {
-  font-size: 13px;
-  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8b95a1;
 }
 
 .memo {
-  font-size: 12px;
-  color: #bbb;
+  font-size: 13px;
+  color: #adb5bd;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 300px;
 }
 
-/* 오른쪽: 금액 영역 */
+/* 금액 및 편집 영역 */
 .balance-area {
   flex-shrink: 0;
-  text-align: right;
-  position: relative; /* 기준점 설정 */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 40px; /* 아이콘 공간 확보 */
+  align-items: flex-end;
+  gap: 8px;
 }
 
-/* 연필 아이콘 버튼 스타일 */
+/* 편집 아이콘 */
 .edit-icon-btn {
-  position: absolute;
-  top: -10px;
-  right: -5px;
   background: none;
   border: none;
-  color: #ccc; /* 평소엔 연하게 */
+  color: #adb5bd;
   cursor: pointer;
-  padding: 5px;
-  font-size: 14px;
+  padding: 4px;
+  font-size: 16px;
   transition: color 0.2s;
 }
 
 .edit-icon-btn:hover {
-  color: #666; /* 호버 시 진하게 */
+  color: #1a5c9c; /* 테마 컬러로 피드백 */
 }
 
 .amount {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
+/* 수입/지출 컬러 명확화 */
 .income {
-  color: #007bff;
+  color: #1a5c9c; /* 수입을 메인 테마 컬러로 강조 */
 }
+
 .expense {
-  color: #ff4d4f;
+  color: #f04452; /* 지출은 명확한 레드 톤 */
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .memo {
+    max-width: 150px;
+  }
+  .item-card {
+    padding: 16px 20px;
+  }
+  .name {
+    font-size: 16px;
+  }
+  .amount {
+    font-size: 18px;
+  }
 }
 </style>
