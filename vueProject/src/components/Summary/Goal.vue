@@ -1,11 +1,21 @@
 <template>
-  <div class="goal-container" v-if="currentGoal">
+  <div class="goal-container">
     <div class="header-stats">
-      <div class="stat-item clickable" @click="goToGoalEdit">
-        <span class="label">{{ displayMonth }} 지출 목표🎯</span>
-        <span class="value">
-          {{ currentGoal?.balance?.toLocaleString() || 0 }}원
-        </span>
+      <div
+        class="stat-item clickable"
+        @click="goToGoalEdit"
+        :class="{ 'no-goal-bg': !currentGoal }"
+      >
+        <template v-if="currentGoal">
+          <span class="label">{{ displayMonth }} 지출 목표🎯</span>
+          <span class="value"
+            >{{ currentGoal.balance.toLocaleString() }}원</span
+          >
+        </template>
+        <template v-else>
+          <span class="label">{{ displayMonth }} 지출 목표🎯</span>
+          <span class="value small-text">새로운 목표를 설정해주세요!</span>
+        </template>
       </div>
 
       <div class="stat-item">
@@ -30,9 +40,7 @@
       <div class="progress-info">
         <span class="current-expense">
           현재 지출:
-          <strong
-            >{{ goalStore.currentExpenditure.toLocaleString() }}원
-          </strong>
+          <strong>{{ goalStore.currentExpenditure.toLocaleString() }}원</strong>
         </span>
         <span>
           사용 가능 금액:
@@ -44,13 +52,10 @@
     <div class="alert-section" v-if="transactionStore.transactions.length > 0">
       <p class="alert-text">
         이번 달 과소비 금액은
-        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요.💸 (총
-        지출의 {{ overSpendRate }}%)
+        <strong>{{ overSpendAmount.toLocaleString() }}원</strong>이에요.💸 (전체
+        소비의 <strong>{{ overSpendRate }}%</strong>)
       </p>
     </div>
-  </div>
-  <div v-else class="no-goal" @click="goToGoalEdit">
-    설정된 지출 목표가 없습니다. (클릭하여 설정)
   </div>
 </template>
 
@@ -190,7 +195,7 @@ const overSpendRate = computed(() => {
 
 .progress-info {
   text-align: right;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   color: #666;
 }
 
