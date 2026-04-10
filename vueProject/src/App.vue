@@ -2,7 +2,7 @@
   <div>
     <Header />
     <RouterView v-slot="{ Component }">
-      <keep-alive>
+      <keep-alive :exclude="['Join', 'Login']">
         <component :is="Component" :key="$route.fullPath" />
       </keep-alive>
     </RouterView>

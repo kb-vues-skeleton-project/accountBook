@@ -81,11 +81,11 @@
       </div>
 
       <!-- 카테고리 -->
-      <div id="categoryId-container" class="toss-field mb-3">
+      <div id="cId-container" class="toss-field mb-3">
         <label class="toss-label">카테고리</label>
         <select
           class="form-select toss-select"
-          v-model="transactionStore.singleTransaction.categoryId"
+          v-model="transactionStore.singleTransaction.cId"
         >
           <option value="0" disabled>-- 카테고리 선택 --</option>
           <option
@@ -96,6 +96,11 @@
             {{ cat.name }}
           </option>
         </select>
+        <div id="action-container">
+          <button type="button" class="toss-add-btn" @click="AddCategory">
+            + 추가
+          </button>
+        </div>
       </div>
 
       <!-- 고정지출 (지출일 때만) -->
@@ -148,6 +153,15 @@
           @click="handleUpdate"
         >
           수정하기
+        </button>
+      </div>
+      <div class="submit-container">
+        <button
+          type="button"
+          class="btn-save toss-save-btn"
+          @click="handleDelete"
+        >
+          삭제하기
         </button>
       </div>
     </div>
@@ -211,6 +225,23 @@ const handleUpdate = async () => {
     console.error(error);
     alert('수정 중 오류가 발생했습니다.');
   }
+};
+
+const handleDelete = async () => {
+  const id = route.query.id;
+  if (!confirm('정말로 이 내역을 삭제하시겠습니까?')) return;
+  try {
+    await transactionStore.deleteTransaction(id);
+    alert('삭제가 완료되었습니다!');
+    router.back();
+  } catch (error) {
+    console.error(error);
+    alert('삭제 중 오류가 발생했습니다.');
+  }
+};
+
+const AddCategory = () => {
+  router.push('/category');
 };
 </script>
 
@@ -345,6 +376,25 @@ const handleUpdate = async () => {
   box-shadow: none !important;
 }
 
+/* 카테고리 추가 버튼 */
+.toss-add-btn {
+  height: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  color: #555555;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+}
+
+.toss-add-btn:hover {
+  background-color: #e6e6e6;
+}
+
 /* 고정지출 체크박스 */
 .toss-check-field {
   background: #ffffff;
@@ -373,7 +423,16 @@ const handleUpdate = async () => {
   flex-shrink: 0;
 }
 
-/* 저장 버튼 */
+/* 하단 버튼 컨테이너 (한 줄 배치) */
+.submit-container {
+  display: inline-block;
+  width: 48%;
+}
+
+.submit-container:first-of-type {
+  margin-right: 4%;
+}
+
 .toss-save-btn {
   width: 100%;
   padding: 17px;
@@ -384,21 +443,38 @@ const handleUpdate = async () => {
   color: #ffffff;
   cursor: pointer;
   transition:
+    background-color 0.2s,
     opacity 0.15s,
     transform 0.1s;
 }
 
-.toss-save-btn:active {
-  opacity: 0.85;
-  transform: scale(0.99);
-}
-
+/* 수입 수정 호버 */
 .save-income {
   background-color: #1fc7a2;
 }
+.save-income:hover {
+  background-color: #19a98a;
+}
 
+/* 지출 수정 호버 */
 .save-expenditure {
   background-color: #f04452;
+}
+.save-expenditure:hover {
+  background-color: #d63b48;
+}
+
+/* 삭제 버튼 색상 및 호버 */
+.submit-container:last-of-type .toss-save-btn {
+  background-color: #b0b0b0;
+}
+.submit-container:last-of-type .toss-save-btn:hover {
+  background-color: #8e8e8e;
+}
+
+.toss-save-btn:active {
+  opacity: 0.85;
+  transform: scale(0.98);
 }
 
 /* 로딩 */

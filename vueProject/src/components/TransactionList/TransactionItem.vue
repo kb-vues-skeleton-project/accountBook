@@ -17,6 +17,9 @@
     </div>
 
     <div class="balance-area">
+      <button class="edit-icon-btn" @click.stop="goToEdit">
+        <i class="bi bi-pencil-fill">✏️</i>
+      </button>
       <span
         :class="[
           'amount',
@@ -32,6 +35,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useCategoryStore } from '@/stores/categoryStore';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   transaction: {
@@ -40,23 +44,30 @@ const props = defineProps({
   },
 });
 
+const router = useRouter();
 const categoryStore = useCategoryStore();
 
 const categoryIcon = computed(() => {
   if (categoryStore.state.categories.length === 0) return null;
 
   const matchedCategory = categoryStore.state.categories.find(
-    (c) => Number(c.id) === Number(props.transaction.categoryId),
+    (c) => Number(c.id) === Number(props.transaction.cId),
   );
   return matchedCategory ? matchedCategory.image : 'etc.png';
 });
 
 const categoryName = computed(() => {
   const foundCategory = categoryStore.state.categories.find(
-    (c) => Number(c.id) === Number(props.transaction.categoryId),
+    (c) => Number(c.id) === Number(props.transaction.cId),
   );
   return foundCategory ? foundCategory.name : '미지정';
 });
+const goToEdit = () => {
+  router.push({
+    path: '/transactionEdit',
+    query: { id: props.transaction.id }, // id 전달
+  });
+};
 </script>
 
 <style scoped>
@@ -126,6 +137,29 @@ const categoryName = computed(() => {
 .balance-area {
   flex-shrink: 0;
   text-align: right;
+  position: relative; /* 기준점 설정 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 40px; /* 아이콘 공간 확보 */
+}
+
+/* 연필 아이콘 버튼 스타일 */
+.edit-icon-btn {
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  background: none;
+  border: none;
+  color: #ccc; /* 평소엔 연하게 */
+  cursor: pointer;
+  padding: 5px;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.edit-icon-btn:hover {
+  color: #666; /* 호버 시 진하게 */
 }
 
 .amount {

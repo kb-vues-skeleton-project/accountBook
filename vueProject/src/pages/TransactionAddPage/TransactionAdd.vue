@@ -49,9 +49,9 @@
       <label class="toss-label">결제수단</label>
       <select class="form-select toss-select" v-model="method">
         <option value="0" disabled>-- 결제수단 선택 --</option>
-        <option value="1">신용카드</option>
-        <option value="2">체크카드</option>
-        <option value="3">현금</option>
+        <option value="신용">신용</option>
+        <option value="체크">체크</option>
+        <option value="현금">현금</option>
       </select>
     </div>
 
@@ -67,10 +67,10 @@
     </div>
 
     <!-- 카테고리 + 추가 버튼 -->
-    <div id="categoryId-container" class="toss-field mb-3">
+    <div id="cId-container" class="toss-field mb-3">
       <label class="toss-label">카테고리</label>
       <div class="d-flex gap-2">
-        <select class="form-select toss-select" v-model="categoryId">
+        <select class="form-select toss-select" v-model="cId">
           <option value="0" disabled>-- 카테고리 선택 --</option>
           <option
             v-for="cat in filteredCategoryList"
@@ -162,10 +162,10 @@ const AddCategory = () => {
 const type = ref('expenditure');
 const balance = ref(0);
 const name = ref('');
-const categoryId = ref(1);
+const cId = ref(1);
 const date = ref(dateStore.selectedDate);
 const memo = ref('');
-const method = ref(1);
+const method = ref('');
 const isStatic = ref(false);
 
 const saveTransaction = async () => {
@@ -177,20 +177,20 @@ const saveTransaction = async () => {
     alert('거래명을 입력해주세요.');
     return;
   }
-  if (!categoryId.value) {
+  if (!cId.value) {
     alert('카테고리를 선택해주세요.');
     return;
   }
 
   const newTransaction = {
-    userId: JSON.parse(localStorage.getItem('currentUser')),
+    uId: JSON.parse(localStorage.getItem('currentUser')),
     balance: balance.value,
     type: type.value,
     date: date.value,
     name: name.value,
-    method: Number(method.value),
+    method: method.value,
     static: isStatic.value,
-    categoryId: Number(categoryId.value),
+    cId: Number(cId.value),
     memo: memo.value,
   };
 
@@ -218,9 +218,9 @@ const resetFields = () => {
   type.value = 'expenditure';
   balance.value = 0;
   name.value = '';
-  categoryId.value = 1;
+  cId.value = 1;
   memo.value = '';
-  method.value = 1;
+  method.value = '';
   isStatic.value = false;
   date.value = dateStore.selectedDate;
 };

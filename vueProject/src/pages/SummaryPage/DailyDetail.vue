@@ -67,9 +67,9 @@ const editModal = (id) => {
 };
 
 onMounted(async () => {
-  const userId = JSON.parse(localStorage.getItem('currentUser'));
+  const uId = JSON.parse(localStorage.getItem('currentUser'));
   await transactionStore.fetchDailyTransactions({
-    userId: userId,
+    uId: uId,
     date: dateParam.value,
   });
 });

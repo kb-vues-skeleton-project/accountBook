@@ -17,7 +17,7 @@ import AddButton from '@/components/Summary/AddButton.vue';
 
 const transactionStore = useTransactionStore();
 const goalStore = useGoalStore();
-const userId = JSON.parse(localStorage.getItem('currentUser'));
+const uId = JSON.parse(localStorage.getItem('currentUser'));
 
 const now = new Date();
 const currMonth = ref(
@@ -30,11 +30,11 @@ const handleViewChange = async ({ startDate, endDate }) => {
 
   await Promise.all([
     transactionStore.fetchTransactions({
-      userId: userId,
+      uId: uId,
       startDate,
       endDate,
     }),
-    goalStore.fetchGoalByMonth(userId, currMonth.value.substring(2)),
+    goalStore.fetchGoalByMonth(uId, currMonth.value.substring(2)),
   ]);
 };
 </script>
