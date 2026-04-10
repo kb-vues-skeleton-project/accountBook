@@ -64,10 +64,6 @@
       저장하기
     </button>
   </div>
-
-  <div>
-    <button type="button" @click="router.back()">돌아가기</button>
-  </div>
 </template>
 
 <script setup>
@@ -75,7 +71,7 @@ import { useCategoryStore } from '@/stores/categoryStore';
 import { useDateStore } from '@/stores/dateStore';
 import { useTransactionStore } from '@/stores/transactionStore';
 import { ref, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, onBeforeRouteLeave } from 'vue-router';
 
 const router = useRouter();
 const transactionStore = useTransactionStore();
@@ -141,6 +137,27 @@ const saveTransaction = async () => {
   } catch (error) {
     alert('저장 실패! 다시 시도해주세요.');
   }
+};
+
+// 페이지를 떠날 때 실행되는 훅
+onBeforeRouteLeave((to, from, next) => {
+  // 목적지(to)가 카테고리 추가 페이지('/category')가 아니라면 데이터 초기화
+  if (to.path !== '/category') {
+    resetFields();
+  }
+  next();
+});
+
+// 초기화 함수
+const resetFields = () => {
+  type.value = 'expenditure';
+  balance.value = 0;
+  name.value = '';
+  categoryId.value = 1;
+  memo.value = '';
+  method.value = 1;
+  isStatic.value = false;
+  date.value = dateStore.selectedDate;
 };
 </script>
 

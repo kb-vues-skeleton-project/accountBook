@@ -1,7 +1,11 @@
 <template>
   <div>
     <Header />
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" :key="$route.fullPath" />
+      </keep-alive>
+    </RouterView>
   </div>
 </template>
 
