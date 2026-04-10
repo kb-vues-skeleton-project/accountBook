@@ -6,7 +6,7 @@ import { useTransactionStore } from './transactionStore'; // 지출 합계를 �
 export const useGoalStore = defineStore('goal', () => {
   const currentMonthGoal = ref(null);
   const transactionStore = useTransactionStore();
-  const BASEURIGoal = '/api/goal';
+  const BASEURIGoal = '/api/goals';
 
   // Action: 특정 유저의 특정 달 목표 딱 하나만 가져오기
   const fetchGoalByMonth = async (userId, yearMonth) => {
