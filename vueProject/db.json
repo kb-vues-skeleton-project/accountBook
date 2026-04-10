@@ -89,6 +89,12 @@
       "name": "금융수입",
       "image": "finance.png",
       "type": "income"
+    },
+    {
+      "name": "쇼핑",
+      "type": "expenditure",
+      "image": "shopping.png",
+      "id": 13
     }
   ],
   "goal": [
@@ -233,7 +239,7 @@
       "date": "2026-04-06",
       "name": "김치찌개",
       "method": "신용",
-      "static": false,
+      "static": true,
       "categoryId": 2,
       "memo": "점심 식사",
       "selfCheck": 1
@@ -347,6 +353,18 @@
       "categoryId": 2,
       "memo": "아아맛있다",
       "id": 19
+    },
+    {
+      "userId": "admin",
+      "balance": 10000,
+      "type": "income",
+      "date": "2026-04-11",
+      "name": "신발 환불",
+      "method": 3,
+      "static": false,
+      "categoryId": 1,
+      "memo": "배송비 무료",
+      "id": 20
     }
   ]
 }
