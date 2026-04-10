@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
 export const useCategoryStore = defineStore('categoryStore', () => {
-  const BASEURI = '/api/category';
+  const BASEURI = '/api/categories';
 
   const state = reactive({
     categories: [],
@@ -30,6 +30,7 @@ export const useCategoryStore = defineStore('categoryStore', () => {
     'utility.png',
   ]);
 
+  // 카테고리 조회
   const fetchCategories = async () => {
     try {
       const response = await axios.get(BASEURI);
@@ -67,12 +68,23 @@ export const useCategoryStore = defineStore('categoryStore', () => {
   };
 
   // 카테고리 삭제
+  // categoryStore.js
   const deleteCategory = async (id) => {
     try {
-      await axios.delete(`${BASEURI}/${id}`);
-      state.categories = state.categories.filter((c) => c.id !== id);
+      // 1. 서버에 먼저 삭제 요청 (성공 시 200 OK)
+      const response = await axios.delete(`${BASEURI}/${id}`);
+
+      // 2. 서버 삭제가 성공했을 때만 로컬 state 업데이트
+      if (response.status === 200) {
+        state.categories = state.categories.filter(
+          (c) => Number(c.id) !== Number(id),
+        );
+        console.log('삭제 성공 및 상태 업데이트 완료');
+      }
     } catch (error) {
       console.error('삭제 실패:', error);
+      // 실패 시 다시 데이터를 불러와서 싱크 맞추기
+      fetchCategories();
     }
   };
 
