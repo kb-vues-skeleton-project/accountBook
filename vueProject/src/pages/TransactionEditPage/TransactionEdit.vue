@@ -129,8 +129,11 @@
         />
       </div>
 
-      <!-- 자가점검 라디오 -->
-      <div class="toss-field mb-3">
+      <!-- 자가점검 라디오 (지출일 때만) -->
+      <div
+        v-if="transactionStore.singleTransaction.type === 'expenditure'"
+        class="toss-field mb-3"
+      >
         <label class="toss-label">자가점검</label>
         <div class="self-check-group">
           <label
