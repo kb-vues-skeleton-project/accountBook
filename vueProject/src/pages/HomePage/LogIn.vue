@@ -43,133 +43,6 @@
   </div>
 </template>
 
-<style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: #f8f9fa;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 400px;
-  background: #ffffff;
-  padding: 50px 30px;
-  border-radius: 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-  text-align: center;
-}
-
-.login-header {
-  margin-bottom: 35px;
-}
-
-.logo-circle {
-  font-size: 40px;
-  width: 70px;
-  height: 70px;
-  background-color: #f0f7ff;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto 15px;
-}
-
-.login-header h2 {
-  font-size: 24px;
-  font-weight: 800;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.login-header p {
-  font-size: 14px;
-  color: #888;
-}
-
-.form-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  text-align: left;
-}
-
-.input-group label {
-  font-size: 13px;
-  font-weight: 700;
-  color: #555;
-  padding-left: 4px;
-}
-
-input {
-  width: 100%;
-  padding: 14px 18px;
-  border-radius: 15px;
-  border: 1px solid #eee;
-  background-color: #fafafa;
-  font-size: 15px;
-  transition: all 0.2s;
-}
-
-input:focus {
-  outline: none;
-  border-color: #007bff;
-  background-color: #ffffff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.1);
-}
-
-.error-msg {
-  color: #ff4d4f;
-  font-size: 13px;
-  margin: 0;
-  font-weight: 500;
-}
-
-.btn-login {
-  width: 100%;
-  padding: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.2s;
-}
-
-.btn-login:hover {
-  background-color: #0056b3;
-}
-
-.footer-links {
-  margin-top: 25px;
-  font-size: 14px;
-  color: #999;
-}
-
-.footer-links button {
-  background: none;
-  border: none;
-  color: #007bff;
-  font-weight: 700;
-  cursor: pointer;
-  margin-left: 8px;
-  text-decoration: underline;
-}
-</style>
-
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { useUserStore } from '@/stores/userStore';
@@ -197,3 +70,184 @@ const loginHandler = () => {
   }
 };
 </script>
+
+<style scoped>
+/* 전체 컨테이너 */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f8f9fa; /* 전체 배경 일관성 */
+  font-family:
+    'Pretendard',
+    -apple-system,
+    sans-serif;
+}
+
+/* 로그인 카드 */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 50px 35px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+/* 헤더 영역 */
+.login-header {
+  margin-bottom: 40px;
+}
+
+.logo-circle {
+  width: 72px;
+  height: 72px;
+  background-color: #f0f4f8; /* 테마 컬러의 아주 연한 버전 */
+  border-radius: 22px; /* 살짝 각진 둥근 형태 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px;
+}
+
+.icon {
+  font-size: 32px;
+}
+
+.login-header h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #191f28;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.login-header p {
+  font-size: 15px;
+  color: #4e5968;
+  line-height: 1.5;
+}
+
+/* 폼 영역 */
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #4e5968;
+  padding-left: 2px;
+}
+
+input {
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  border: 1.5px solid #e5e8eb;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: #333d4b;
+  transition: all 0.2s ease;
+}
+
+input::placeholder {
+  color: #adb5bd;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1a5c9c; /* 테마 컬러 포커스 */
+  box-shadow: 0 0 0 4px rgba(26, 92, 156, 0.1);
+}
+
+/* 에러 메시지 */
+.error-msg {
+  color: #f04452;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 2px;
+}
+
+/* 로그인 버튼 */
+.btn-login {
+  width: 100%;
+  padding: 18px;
+  background-color: #1a5c9c; /* 테마 컬러 적용 */
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-login:hover {
+  background-color: #14497a;
+  transform: translateY(-1px);
+}
+
+.btn-login:active {
+  transform: scale(0.98);
+}
+
+/* 하단 링크 */
+.footer-links {
+  margin-top: 30px;
+  font-size: 15px;
+  color: #8b95a1;
+}
+
+.footer-links button {
+  background: none;
+  border: none;
+  color: #1a5c9c; /* 테마 컬러 */
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.footer-links button:hover {
+  color: #14497a;
+  text-decoration: underline;
+}
+
+/* 에러 메시지 페이드 효과 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+    box-shadow: none;
+  }
+  .login-container {
+    background-color: #ffffff;
+  }
+}
+</style>
