@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "userId": "admin",
       "password": "12341234",
       "name": "홍길동",
@@ -257,88 +257,28 @@
       "selfCheck": 3
     },
     {
-      "type": "expenditure",
-      "balance": 3,
-      "name": "dfds",
-      "categoryId": 1,
-      "date": "2026-04-08",
-      "memo": "dfsf",
-      "createdAt": 1775632913950,
       "userId": "admin",
+      "balance": 10000,
+      "type": "expenditure",
+      "date": "2026-04-10",
+      "name": "1000",
+      "method": "체크",
+      "static": false,
+      "categoryId": 1,
+      "memo": "",
       "id": 13
     },
     {
-      "createdAt": 1775634175815,
       "userId": "admin",
-      "balance": 45000,
-      "type": "expenditure",
-      "date": "2026-04-08",
-      "name": "케이크 주문 제작",
-      "method": 3,
-      "static": false,
-      "categoryId": 1,
-      "memo": "계좌이체",
-      "id": 14
-    },
-    {
-      "userId": "admin",
-      "balance": 1000,
-      "type": "expenditure",
-      "date": "2026-04-07",
-      "name": "테스트",
-      "method": 1,
-      "static": true,
-      "categoryId": 3,
-      "memo": "",
-      "id": 15
-    },
-    {
-      "userId": "admin",
-      "balance": 5,
-      "type": "expenditure",
-      "date": "2026-04-09",
-      "name": "dsfs",
-      "method": 1,
-      "static": true,
-      "categoryId": 1,
-      "memo": "",
-      "id": 16
-    },
-    {
-      "userId": "admin9",
-      "balance": 5,
-      "type": "expenditure",
-      "date": "2026-04-09",
-      "name": "dfdsdfsfas",
-      "method": 2,
-      "static": false,
-      "categoryId": 3,
-      "memo": "fsdfdsfsadfsdfsdf",
-      "id": 17
-    },
-    {
-      "userId": "admin9",
-      "balance": 25,
+      "balance": 10000,
       "type": "income",
-      "date": "2026-04-09",
-      "name": "지원금",
-      "method": 3,
+      "date": "2026-04-10",
+      "name": "100",
+      "method": "체크",
       "static": false,
-      "categoryId": 10,
-      "memo": "나머지 언제주냐..",
-      "id": 18
-    },
-    {
-      "userId": "admin9",
-      "balance": 3000,
-      "type": "expenditure",
-      "date": "2026-04-09",
-      "name": "매머드커피",
-      "method": 2,
-      "static": false,
-      "categoryId": 2,
-      "memo": "아아맛있다",
-      "id": 19
+      "categoryId": 1,
+      "memo": "",
+      "id": 14
     }
   ]
 }

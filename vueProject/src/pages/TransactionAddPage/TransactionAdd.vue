@@ -15,9 +15,9 @@
     <label>결제수단</label>
     <select v-model="method">
       <option value="0" disabled>-- 결제수단 선택 --</option>
-      <option value="1">신용</option>
-      <option value="2">체크</option>
-      <option value="3">현금</option>
+      <option value="신용">신용</option>
+      <option value="체크">체크</option>
+      <option value="현금">현금</option>
     </select>
   </div>
 
@@ -100,7 +100,7 @@ const name = ref('');
 const categoryId = ref(1);
 const date = ref(dateStore.selectedDate);
 const memo = ref('');
-const method = ref(1);
+const method = ref('');
 const isStatic = ref(false);
 
 const saveTransaction = async () => {
@@ -123,7 +123,7 @@ const saveTransaction = async () => {
     type: type.value,
     date: date.value,
     name: name.value,
-    method: Number(method.value),
+    method: method.value,
     static: isStatic.value,
     categoryId: Number(categoryId.value),
     memo: memo.value,
@@ -155,7 +155,7 @@ const resetFields = () => {
   name.value = '';
   categoryId.value = 1;
   memo.value = '';
-  method.value = 1;
+  method.value = '';
   isStatic.value = false;
   date.value = dateStore.selectedDate;
 };
