@@ -9,10 +9,10 @@ export const useGoalStore = defineStore('goal', () => {
   const BASEURIGoal = '/api/goals';
 
   // Action: 특정 유저의 특정 달 목표 딱 하나만 가져오기
-  const fetchGoalByMonth = async (userId, yearMonth) => {
+  const fetchGoalByMonth = async (uId, yearMonth) => {
     try {
       const response = await axios.get(
-        `${BASEURIGoal}?userId=${userId}&date=${yearMonth}`,
+        `${BASEURIGoal}?uId=${uId}&date=${yearMonth}`,
       );
 
       // 결과가 배열로 오므로 첫 번째 요소를 저장

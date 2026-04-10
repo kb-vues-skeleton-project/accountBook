@@ -28,7 +28,7 @@ import AddButton from '@/components/Summary/AddButton.vue';
 
 const transactionStore = useTransactionStore();
 const categoryStore = useCategoryStore();
-const userId = JSON.parse(localStorage.getItem('currentUser'));
+const uId = JSON.parse(localStorage.getItem('currentUser'));
 
 // 날짜 포맷팅
 const getYearMonth = () => {
@@ -46,7 +46,7 @@ onMounted(async () => {
   await categoryStore.fetchCategories();
 
   await transactionStore.fetchTransactions({
-    userId,
+    uId,
     startDate,
     endDate,
   });

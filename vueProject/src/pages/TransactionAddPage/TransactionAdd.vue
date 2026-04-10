@@ -26,9 +26,9 @@
     <input type="text" v-model="name" placeholder="예: 점심 식사, 월급" />
   </div>
 
-  <div id="categoryId-container">
+  <div id="cId-container">
     <label>카테고리</label>
-    <select v-model="categoryId">
+    <select v-model="cId">
       <option value="0" disabled>-- 카테고리 선택 --</option>
       <option v-for="cat in filteredCategoryList" :key="cat.id" :value="cat.id">
         {{ cat.name }}
@@ -97,7 +97,7 @@ const AddCategory = () => {
 const type = ref('expenditure');
 const balance = ref(0);
 const name = ref('');
-const categoryId = ref(1);
+const cId = ref(1);
 const date = ref(dateStore.selectedDate);
 const memo = ref('');
 const method = ref('');
@@ -112,20 +112,20 @@ const saveTransaction = async () => {
     alert('거래명을 입력해주세요.');
     return;
   }
-  if (!categoryId.value) {
+  if (!cId.value) {
     alert('카테고리를 선택해주세요.');
     return;
   }
 
   const newTransaction = {
-    userId: JSON.parse(localStorage.getItem('currentUser')),
+    uId: JSON.parse(localStorage.getItem('currentUser')),
     balance: balance.value,
     type: type.value,
     date: date.value,
     name: name.value,
     method: method.value,
     static: isStatic.value,
-    categoryId: Number(categoryId.value),
+    cId: Number(cId.value),
     memo: memo.value,
   };
 
@@ -153,7 +153,7 @@ const resetFields = () => {
   type.value = 'expenditure';
   balance.value = 0;
   name.value = '';
-  categoryId.value = 1;
+  cId.value = 1;
   memo.value = '';
   method.value = '';
   isStatic.value = false;

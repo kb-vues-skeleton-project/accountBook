@@ -11,7 +11,7 @@
         <div class="input-group">
           <label>아이디</label>
           <input
-            v-model="userInfo.userId"
+            v-model="userInfo.uId"
             type="text"
             placeholder="ID를 입력하세요"
             @keyup.enter="loginHandler"
@@ -180,7 +180,7 @@ const userStore = useUserStore();
 
 const fail = ref(false); // 로그인 실패
 const userInfo = reactive({
-  userId: '',
+  uId: '',
   password: '',
 });
 
@@ -189,7 +189,7 @@ onMounted(() => {
 });
 
 const loginHandler = () => {
-  const result = userStore.login(userInfo.userId, userInfo.password);
+  const result = userStore.login(userInfo.uId, userInfo.password);
   if (result.success) {
     router.push({ name: 'summary' });
   } else {

@@ -22,9 +22,9 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   // ID 중복 확인
-  const isIdDuplicate = (userId) => {
+  const isIdDuplicate = (uId) => {
     return state.users.some(
-      (user) => String(user.userId).trim() === String(userId).trim(),
+      (user) => String(user.uId).trim() === String(uId).trim(),
     );
   };
 
@@ -43,15 +43,15 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   // 로그인 (ID/PW 확인)
-  const login = (userId, password) => {
+  const login = (uId, password) => {
     const foundUser = state.users.find(
-      (u) => u.userId === userId && u.password === password,
+      (u) => u.uId === uId && u.password === password,
     );
 
     if (foundUser) {
       // 로그인 한 유저 정보 저장
       state.currentUser = foundUser;
-      localStorage.setItem('currentUser', JSON.stringify(foundUser.userId));
+      localStorage.setItem('currentUser', JSON.stringify(foundUser.uId));
       return { success: true };
     } else {
       return {

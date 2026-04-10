@@ -46,14 +46,14 @@ const categoryIcon = computed(() => {
   if (categoryStore.state.categories.length === 0) return null;
 
   const matchedCategory = categoryStore.state.categories.find(
-    (c) => Number(c.id) === Number(props.transaction.categoryId),
+    (c) => Number(c.id) === Number(props.transaction.cId),
   );
   return matchedCategory ? matchedCategory.image : 'etc.png';
 });
 
 const categoryName = computed(() => {
   const foundCategory = categoryStore.state.categories.find(
-    (c) => Number(c.id) === Number(props.transaction.categoryId),
+    (c) => Number(c.id) === Number(props.transaction.cId),
   );
   return foundCategory ? foundCategory.name : '미지정';
 });

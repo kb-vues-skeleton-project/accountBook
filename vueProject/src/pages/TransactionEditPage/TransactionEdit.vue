@@ -56,9 +56,9 @@
         />
       </div>
 
-      <div id="categoryId-container">
+      <div id="cId-container">
         <label>카테고리</label>
-        <select v-model="transactionStore.singleTransaction.categoryId">
+        <select v-model="transactionStore.singleTransaction.cId">
           <option value="0" disabled>-- 카테고리 선택 --</option>
           <option
             v-for="cat in filteredCategoryList"
