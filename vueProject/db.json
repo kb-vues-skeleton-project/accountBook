@@ -87,14 +87,14 @@
     {
       "id": 1,
       "uId": "admin",
-      "balance": 1200000,
+      "balance": 250000,
       "date": "26-03",
       "amount": 1154000
     },
     {
       "id": 2,
       "uId": "admin",
-      "balance": 800000,
+      "balance": 700000,
       "date": "26-04",
       "amount": 103000
     }
