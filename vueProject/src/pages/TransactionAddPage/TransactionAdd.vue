@@ -115,7 +115,7 @@
           :key="opt.value"
           :for="'check-' + opt.value"
           class="self-check-card"
-          :class="{ 'is-selected': selfCheck === opt.value }"
+          :class="{ [`is-selected-${opt.value}`]: selfCheck === opt.value }"
         >
           <input
             type="radio"
@@ -482,9 +482,36 @@ const resetFields = () => {
     background-color 0.2s;
 }
 
-.self-check-card.is-selected {
+/* .self-check-card.is-selected {
   border-color: #f04452;
   background-color: #fff5f6;
+}  */
+
+/* 1. 현명한소비 (초록색) */
+.self-check-card.is-selected-1 {
+  border-color: #1fc7a2; /* 초록색 테두리 */
+  background-color: #f0fffb; /* 연한 초록색 배경 */
+}
+.self-check-card.is-selected-1 .self-check-label-text {
+  color: #1fc7a2; /* 초록색 글씨 */
+}
+
+/* 2. 합리적소비 (노란색/주황색) */
+.self-check-card.is-selected-2 {
+  border-color: #ffb800; /* 노란색 테두리 */
+  background-color: #fffdf0; /* 연한 노란색 배경 */
+}
+.self-check-card.is-selected-2 .self-check-label-text {
+  color: #ffb800; /* 노란색 글씨 */
+}
+
+/* 3. 반성하자 (회색) */
+.self-check-card.is-selected-3 {
+  border-color: #888888; /* 회색 테두리 */
+  background-color: #f0f0f0; /* 연한 회색 배경 */
+}
+.self-check-card.is-selected-3 .self-check-label-text {
+  color: #f04452; /* 회색 글씨 */
 }
 
 .self-check-radio {
