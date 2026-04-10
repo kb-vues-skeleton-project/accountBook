@@ -106,44 +106,40 @@
       <input type="date" class="form-control toss-input" v-model="date" />
     </div>
 
-    <div>
-      <div>
-        <input
-          type="radio"
-          id="option1"
-          name="choice"
-          value="option1"
-          v-model="selfCheck"
-        />
-        <label for="option1">옵션 1</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          id="option2"
-          name="choice"
-          value="option2"
-          v-model="selfCheck"
-        />
-        <label for="option2">옵션 2</label>
-      </div>
-      <div>
-        <input
-          type="radio"
-          id="option3"
-          name="choice"
-          value="option3"
-          v-model="selfCheck"
-        />
-        <label for="option3">옵션 3</label>
+    <!-- 자가점검 라디오 -->
+    <div class="toss-field mb-3">
+      <label class="toss-label">자가점검</label>
+      <div class="self-check-group">
+        <label
+          v-for="opt in selfCheckOptions"
+          :key="opt.value"
+          :for="'check-' + opt.value"
+          class="self-check-card"
+          :class="{ 'is-selected': selfCheck === opt.value }"
+        >
+          <input
+            type="radio"
+            :id="'check-' + opt.value"
+            name="selfCheck"
+            :value="opt.value"
+            v-model="selfCheck"
+            class="self-check-radio"
+          />
+          <img :src="opt.img" :alt="opt.label" class="self-check-img" />
+          <span class="self-check-label-text">{{ opt.label }}</span>
+        </label>
       </div>
     </div>
 
-    <div id="memo-container">
-      <label
-        >메모
-        <input type="text" v-model="memo" placeholder="메모는 선택사항입니다" />
-      </label>
+    <!-- 메모 -->
+    <div id="memo-container" class="toss-field mb-3">
+      <label class="toss-label">메모</label>
+      <input
+        type="text"
+        class="form-control toss-input"
+        v-model="memo"
+        placeholder="메모는 선택사항입니다"
+      />
     </div>
 
     <!-- 저장 버튼 -->
@@ -171,6 +167,11 @@ const router = useRouter();
 const transactionStore = useTransactionStore();
 const categoryStore = useCategoryStore();
 const dateStore = useDateStore();
+const selfCheckOptions = [
+  { value: 1, img: '/images/selfcheck/good.png', label: '현명한소비' },
+  { value: 2, img: '/images/selfcheck/normal.png', label: '합리적소비' },
+  { value: 3, img: '/images/selfcheck/bad.png', label: '반성하자' },
+];
 
 // 페이지 로드 시 카테고리 가져오기
 onMounted(() => {
@@ -196,7 +197,7 @@ const date = ref(dateStore.selectedDate);
 const memo = ref('');
 const method = ref('');
 const isStatic = ref(false);
-const selfCheck = ref(0);
+const selfCheck = ref(1);
 
 const saveTransaction = async () => {
   if (balance.value <= 0) {
@@ -209,6 +210,10 @@ const saveTransaction = async () => {
   }
   if (!cId.value) {
     alert('카테고리를 선택해주세요.');
+    return;
+  }
+  if (!selfCheck.value) {
+    alert('자가점검을 선택해주세요.');
     return;
   }
 
@@ -254,6 +259,7 @@ const resetFields = () => {
   method.value = '';
   isStatic.value = false;
   date.value = dateStore.selectedDate;
+  selfCheck.value = 1;
 };
 </script>
 
@@ -453,5 +459,51 @@ const resetFields = () => {
 
 .save-expenditure {
   background-color: #f04452;
+}
+
+.self-check-group {
+  display: flex;
+  gap: 10px;
+}
+
+.self-check-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: 2px solid #efefef;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.self-check-card.is-selected {
+  border-color: #f04452;
+  background-color: #fff5f6;
+}
+
+.self-check-radio {
+  display: none;
+}
+
+.self-check-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.self-check-label-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.self-check-card.is-selected .self-check-label-text {
+  color: #f04452;
 }
 </style>

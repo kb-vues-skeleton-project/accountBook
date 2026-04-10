@@ -62,7 +62,7 @@ export const useTransactionStore = defineStore('transaction', () => {
       console.log(err);
     }
   };
-
+  // 거래 내역 삭제
   const deleteTransaction = async (id) => {
     try {
       await axios.delete(`${BASEURITransactions}/${id}`);

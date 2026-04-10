@@ -1,7 +1,5 @@
 <template>
   <div class="toss-wrap">
-    <h2 class="toss-title">거래 내역 수정</h2>
-
     <div v-if="transactionStore.singleTransaction">
       <!-- 수입 / 지출 탭 -->
       <div class="type-tab mb-4">
@@ -80,26 +78,28 @@
         />
       </div>
 
-      <!-- 카테고리 -->
+      <!-- 카테고리 + 추가버튼 -->
       <div id="cId-container" class="toss-field mb-3">
         <label class="toss-label">카테고리</label>
-        <select
-          class="form-select toss-select"
-          v-model="transactionStore.singleTransaction.cId"
-        >
-          <option value="0" disabled>-- 카테고리 선택 --</option>
-          <option
-            v-for="cat in filteredCategoryList"
-            :key="cat.id"
-            :value="cat.id"
+        <div class="d-flex gap-2">
+          <select
+            class="form-select toss-select"
+            v-model="transactionStore.singleTransaction.cId"
           >
-            {{ cat.name }}
-          </option>
-        </select>
-        <div id="action-container">
-          <button type="button" class="toss-add-btn" @click="AddCategory">
-            + 추가
-          </button>
+            <option value="0" disabled>-- 카테고리 선택 --</option>
+            <option
+              v-for="cat in filteredCategoryList"
+              :key="cat.id"
+              :value="cat.id"
+            >
+              {{ cat.name }}
+            </option>
+          </select>
+          <div id="action-container">
+            <button type="button" class="toss-add-btn" @click="AddCategory">
+              + 추가
+            </button>
+          </div>
         </div>
       </div>
 
@@ -129,8 +129,36 @@
         />
       </div>
 
+      <!-- 자가점검 라디오 -->
+      <div class="toss-field mb-3">
+        <label class="toss-label">자가점검</label>
+        <div class="self-check-group">
+          <label
+            v-for="opt in selfCheckOptions"
+            :key="opt.value"
+            :for="'check-' + opt.value"
+            class="self-check-card"
+            :class="{
+              'is-selected':
+                transactionStore.singleTransaction.selfCheck === opt.value,
+            }"
+          >
+            <input
+              type="radio"
+              :id="'check-' + opt.value"
+              name="selfCheck"
+              :value="opt.value"
+              v-model="transactionStore.singleTransaction.selfCheck"
+              class="self-check-radio"
+            />
+            <img :src="opt.img" :alt="opt.label" class="self-check-img" />
+            <span class="self-check-label-text">{{ opt.label }}</span>
+          </label>
+        </div>
+      </div>
+
       <!-- 메모 -->
-      <div id="memo-container" class="toss-field mb-5">
+      <div id="memo-container" class="toss-field mb-3">
         <label class="toss-label">메모</label>
         <input
           type="text"
@@ -144,7 +172,7 @@
       <div class="submit-container">
         <button
           type="button"
-          class="btn-save toss-save-btn"
+          class="toss-save-btn"
           :class="
             transactionStore.singleTransaction.type === 'income'
               ? 'save-income'
@@ -182,6 +210,11 @@ const route = useRoute();
 const router = useRouter();
 const transactionStore = useTransactionStore();
 const categoryStore = useCategoryStore();
+const selfCheckOptions = [
+  { value: 1, img: '/images/selfcheck/good.png', label: '현명한소비' },
+  { value: 2, img: '/images/selfcheck/normal.png', label: '합리적소비' },
+  { value: 3, img: '/images/selfcheck/bad.png', label: '반성하자' },
+];
 
 onMounted(async () => {
   const id = route.query.id;
@@ -485,5 +518,51 @@ const AddCategory = () => {
   min-height: 300px;
   color: #aaaaaa;
   font-size: 15px;
+}
+
+.self-check-group {
+  display: flex;
+  gap: 10px;
+}
+
+.self-check-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: 2px solid #efefef;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.self-check-card.is-selected {
+  border-color: #f04452;
+  background-color: #fff5f6;
+}
+
+.self-check-radio {
+  display: none;
+}
+
+.self-check-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.self-check-label-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.self-check-card.is-selected .self-check-label-text {
+  color: #f04452;
 }
 </style>

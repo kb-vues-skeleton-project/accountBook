@@ -279,6 +279,32 @@
       "cId": 1,
       "memo": "",
       "id": 14
+    },
+    {
+      "uId": "admin",
+      "balance": 6000,
+      "type": "expenditure",
+      "date": "2026-04-10",
+      "name": "아이스슈크림라떼",
+      "method": "현금",
+      "static": false,
+      "cId": 2,
+      "memo": "그란데사이즈",
+      "selfCheck": 1,
+      "id": 15
+    },
+    {
+      "uId": "admin",
+      "balance": 9800,
+      "type": "expenditure",
+      "date": "2026-04-10",
+      "name": "두쫀쿠",
+      "method": "신용",
+      "static": false,
+      "cId": 2,
+      "memo": "오소리베이커리",
+      "selfCheck": 3,
+      "id": 16
     }
   ]
 }
