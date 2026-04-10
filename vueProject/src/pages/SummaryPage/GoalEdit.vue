@@ -130,13 +130,29 @@ button {
 }
 
 .save-btn {
-  background-color: #007bff;
-  color: white;
-  flex-grow: 1; /* 저장 버튼을 더 크게 */
+  background-color: #1a5c9c; /* 요청하신 색상 */
+  color: white; /* 글자 흰색 */
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px; /* 동그랗게 굴린 네모 */
+  font-weight: 700;
+  cursor: pointer;
+  flex-grow: 1;
+  transition: opacity 0.2s;
 }
 
+.save-btn:hover {
+  opacity: 0.9; /* 살짝 피드백 */
+}
+
+/* 취소 버튼 스타일 */
 .cancel-btn {
   background-color: #eee;
   color: #333;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px; /* 동일하게 굴린 네모 */
+  font-weight: 600;
+  cursor: pointer;
 }
 </style>
