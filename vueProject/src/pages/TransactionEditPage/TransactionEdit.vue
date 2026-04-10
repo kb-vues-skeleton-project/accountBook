@@ -104,6 +104,11 @@
           수정하기
         </button>
       </div>
+      <div class="submit-container">
+        <button type="button" class="btn-save" @click="handleDelete">
+          삭제하기
+        </button>
+      </div>
     </div>
 
     <div v-else>
@@ -163,6 +168,18 @@ const handleUpdate = async () => {
   } catch (error) {
     console.error(error);
     alert('수정 중 오류가 발생했습니다.');
+  }
+};
+
+const handleDelete = async () => {
+  const id = route.query.id;
+  try {
+    await transactionStore.deleteTransaction(id);
+    alert('삭제가 완료되었습니다!');
+    router.back();
+  } catch (error) {
+    console.error(error);
+    alert('삭제 중 오류가 발생했습니다.');
   }
 };
 </script>

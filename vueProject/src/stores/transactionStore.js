@@ -63,6 +63,18 @@ export const useTransactionStore = defineStore('transaction', () => {
     }
   };
 
+  const deleteTransaction = async (id) => {
+    try {
+      await axios.delete(`${BASEURITransactions}/${id}`);
+      transactions.value = transactions.value.filter(
+        (t) => String(t.id) !== String(id),
+      );
+      singleTransaction.value = null;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // 개별 날짜 전용 조회 (dailyDetail용)
   const fetchDailyTransactions = async ({ uId, date }) => {
     try {
@@ -110,5 +122,6 @@ export const useTransactionStore = defineStore('transaction', () => {
     fetchDailyTransactions,
     addTransaction,
     updateTransaction,
+    deleteTransaction,
   };
 });
