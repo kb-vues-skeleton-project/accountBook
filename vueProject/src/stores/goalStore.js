@@ -54,6 +54,25 @@ export const useGoalStore = defineStore('goal', () => {
     return remaining > 0 ? remaining : 0;
   });
 
+  const updateGoal = async (id, newBalance) => {
+    try {
+      // 1. 서버(DB) 데이터 업데이트 (PATCH: balance만 쏙 수정)
+      const response = await axios.patch(`${BASEURIGoal}/${id}`, {
+        balance: newBalance,
+      });
+
+      // 2. 현재 스토어에 저장된 값도 즉시 업데이트
+      // (Summary 화면의 숫자가 새로고침 없이 바로 바뀜)
+      if (currentMonthGoal.value) {
+        currentMonthGoal.value.balance = response.data.balance;
+      }
+      return { success: true };
+    } catch (error) {
+      console.error('목표 수정 실패:', error);
+      return { success: false };
+    }
+  };
+
   return {
     currentMonthGoal,
     fetchGoalByMonth,
@@ -61,5 +80,6 @@ export const useGoalStore = defineStore('goal', () => {
     currentExpenditure,
     achievementRate,
     remainingBudget,
+    updateGoal,
   };
 });

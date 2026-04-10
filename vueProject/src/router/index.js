@@ -11,6 +11,7 @@ import CategoryAdd from '@/pages/CategoryAddPage/CategoryAdd.vue';
 import TransactionAdd from '@/pages/TransactionAddPage/TransactionAdd.vue';
 import TransactionEdit from '@/pages/TransactionEditPage/TransactionEdit.vue';
 import NotFound from '@/pages/NotFoundPage/NotFound.vue';
+import GoalEdit from '@/pages/SummaryPage/GoalEdit.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,12 @@ const router = createRouter({
       name: 'summary',
       component: Summary,
       children: [
+        // goal을 위로 올려야 정상 작동?? goal은 문자열, :date는 변수이므로?
+        {
+          path: 'goal',
+          name: 'summary/goal',
+          component: GoalEdit,
+        },
         {
           path: ':date',
           name: 'summary/date',
