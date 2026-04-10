@@ -7,17 +7,9 @@
       "name": "홍길동",
       "phoneNum": "010-1234-5678",
       "birthday": "06-10-10"
-    },
-    {
-      "userId": "admin9",
-      "password": "1111",
-      "name": "한채연",
-      "phoneNum": "",
-      "birthday": "00-01-01",
-      "id": "Ya8Gcsz"
     }
   ],
-  "category": [
+  "categories": [
     {
       "id": 1,
       "name": "미분류",
@@ -91,16 +83,16 @@
       "type": "income"
     }
   ],
-  "goal": [
+  "goals": [
     {
-      "id": "1",
+      "id": 1,
       "userId": "admin",
       "balance": 1200000,
       "date": "26-03",
       "amount": 1154000
     },
     {
-      "id": "2",
+      "id": 2,
       "userId": "admin",
       "balance": 800000,
       "date": "26-04",
