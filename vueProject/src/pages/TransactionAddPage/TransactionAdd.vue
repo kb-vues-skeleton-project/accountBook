@@ -56,6 +56,39 @@
     <input type="date" v-model="date" />
   </div>
 
+  <div>
+    <div>
+      <input
+        type="radio"
+        id="option1"
+        name="choice"
+        value="option1"
+        v-model="selfCheck"
+      />
+      <label for="option1">옵션 1</label>
+    </div>
+    <div>
+      <input
+        type="radio"
+        id="option2"
+        name="choice"
+        value="option2"
+        v-model="selfCheck"
+      />
+      <label for="option2">옵션 2</label>
+    </div>
+    <div>
+      <input
+        type="radio"
+        id="option3"
+        name="choice"
+        value="option3"
+        v-model="selfCheck"
+      />
+      <label for="option3">옵션 3</label>
+    </div>
+  </div>
+
   <div id="memo-container">
     <label
       >메모
@@ -98,6 +131,7 @@ const date = ref(new Date().toISOString().substr(0, 10));
 const memo = ref('');
 const method = ref(0);
 const isStatic = ref(false);
+const selfCheck = ref(0);
 
 const saveTransaction = async () => {
   if (balance.value <= 0) {
@@ -123,6 +157,7 @@ const saveTransaction = async () => {
     static: isStatic.value,
     categoryId: Number(categoryId.value),
     memo: memo.value,
+    selfCheck: Number(selfCheck.value),
   };
 
   try {
