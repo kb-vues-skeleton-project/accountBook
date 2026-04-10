@@ -229,6 +229,7 @@ const handleUpdate = async () => {
 
 const handleDelete = async () => {
   const id = route.query.id;
+  if (!confirm('정말로 이 내역을 삭제하시겠습니까?')) return;
   try {
     await transactionStore.deleteTransaction(id);
     alert('삭제가 완료되었습니다!');
@@ -375,6 +376,25 @@ const AddCategory = () => {
   box-shadow: none !important;
 }
 
+/* 카테고리 추가 버튼 */
+.toss-add-btn {
+  height: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  color: #555555;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+}
+
+.toss-add-btn:hover {
+  background-color: #e6e6e6;
+}
+
 /* 고정지출 체크박스 */
 .toss-check-field {
   background: #ffffff;
@@ -402,19 +422,19 @@ const AddCategory = () => {
   border-radius: 6px;
   flex-shrink: 0;
 }
-/* 저장 버튼 컨테이너를 한 줄로 배치 */
+
+/* 하단 버튼 컨테이너 (한 줄 배치) */
 .submit-container {
   display: inline-block;
-  width: 48%; /* 버튼 두 개를 한 줄에 두기 위해 약 절반 설정 */
+  width: 48%;
 }
 
-/* 두 버튼 사이의 간격 처리 */
 .submit-container:first-of-type {
   margin-right: 4%;
 }
 
 .toss-save-btn {
-  width: 100%; /* 부모인 submit-container 너비에 맞춤 */
+  width: 100%;
   padding: 17px;
   border: none;
   border-radius: 16px;
@@ -423,25 +443,38 @@ const AddCategory = () => {
   color: #ffffff;
   cursor: pointer;
   transition:
+    background-color 0.2s,
     opacity 0.15s,
     transform 0.1s;
 }
 
+/* 수입 수정 호버 */
+.save-income {
+  background-color: #1fc7a2;
+}
+.save-income:hover {
+  background-color: #19a98a;
+}
+
+/* 지출 수정 호버 */
+.save-expenditure {
+  background-color: #f04452;
+}
+.save-expenditure:hover {
+  background-color: #d63b48;
+}
+
+/* 삭제 버튼 색상 및 호버 */
 .submit-container:last-of-type .toss-save-btn {
-  background-color: #b0b0b0; /* 삭제 버튼용 회색 */
+  background-color: #b0b0b0;
+}
+.submit-container:last-of-type .toss-save-btn:hover {
+  background-color: #8e8e8e;
 }
 
 .toss-save-btn:active {
   opacity: 0.85;
-  transform: scale(0.99);
-}
-
-.save-income {
-  background-color: #1fc7a2;
-}
-
-.save-expenditure {
-  background-color: #f04452;
+  transform: scale(0.98);
 }
 
 /* 로딩 */
