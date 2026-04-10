@@ -126,15 +126,16 @@ export const useTransactionStore = defineStore('transaction', () => {
     return transactions.value
       .filter((t) => t.date.startsWith('2026-04') && t.type === 'expenditure')
       .reduce((acc, t) => {
-        // 해당 카테고리 ID가 처음 등장하면 0으로 초기화
         if (!acc[t.categoryId]) {
           acc[t.categoryId] = 0;
         }
-        // 금액(balance) 합산
         acc[t.categoryId] += t.balance;
         return acc;
-      }, {}); // 최종 결과 형태: { "1": 5000, "2": 10800 }
+      }, {});
+    // 최종 결과 형태: { "1": 5000, "2": 10800 }
   };
+
+  //정렬한 카테고리 바탕으로 id 받고 그거의 결과 구하기, 그리고 모든 데이터를 각각 나열하기
 
   return {
     transactions,

@@ -15,6 +15,30 @@
       "phoneNum": "",
       "birthday": "00-01-01",
       "id": "Ya8Gcsz"
+    },
+    {
+      "userId": "ㅂㅈㄷ",
+      "password": "qwe",
+      "name": "ㅂㅈㄷ",
+      "phoneNum": "ㅂㅈㄷ",
+      "birthday": "00-01-01",
+      "id": "eesq26O"
+    },
+    {
+      "userId": "assd",
+      "password": "asd",
+      "name": "asd",
+      "phoneNum": "asd",
+      "birthday": "00-01-01",
+      "id": "1b4SYry"
+    },
+    {
+      "userId": "asd",
+      "password": "asd",
+      "name": "asd",
+      "phoneNum": "asd",
+      "birthday": "00-01-01",
+      "id": "MOt5pL1"
     }
   ],
   "category": [
@@ -89,6 +113,12 @@
       "name": "금융수입",
       "image": "finance.png",
       "type": "income"
+    },
+    {
+      "name": "식비",
+      "type": "expenditure",
+      "image": "etc.png",
+      "id": 13
     }
   ],
   "goal": [
@@ -347,6 +377,102 @@
       "categoryId": 2,
       "memo": "아아맛있다",
       "id": 19
+    },
+    {
+      "userId": "ㅂㅈㄷ",
+      "balance": 10000,
+      "type": "expenditure",
+      "date": "2026-04-09",
+      "name": "점심 식사",
+      "method": 1,
+      "static": true,
+      "categoryId": 2,
+      "memo": "",
+      "id": 20
+    },
+    {
+      "userId": "ㅂㅈㄷ",
+      "balance": 5000,
+      "type": "expenditure",
+      "date": "2026-04-01",
+      "name": "쇼핑",
+      "method": 1,
+      "static": true,
+      "categoryId": 3,
+      "memo": "",
+      "id": 21
+    },
+    {
+      "userId": "ㅂㅈㄷ",
+      "balance": 24242,
+      "type": "expenditure",
+      "date": "2026-04-20",
+      "name": "sdsd",
+      "method": 2,
+      "static": true,
+      "categoryId": 7,
+      "memo": "",
+      "id": 22
+    },
+    {
+      "userId": "ㅂㅈㄷ",
+      "balance": 152526,
+      "type": "expenditure",
+      "date": "2026-04-14",
+      "name": "123",
+      "method": 2,
+      "static": false,
+      "categoryId": 5,
+      "memo": "",
+      "id": 23
+    },
+    {
+      "userId": "asd",
+      "balance": 12412,
+      "type": "expenditure",
+      "date": "2026-04-06",
+      "name": "15125",
+      "method": 1,
+      "static": true,
+      "categoryId": 1,
+      "memo": "",
+      "id": 24
+    },
+    {
+      "userId": "asd",
+      "balance": 3476346,
+      "type": "expenditure",
+      "date": "2026-04-28",
+      "name": "346",
+      "method": 1,
+      "static": false,
+      "categoryId": 1,
+      "memo": "",
+      "id": 25
+    },
+    {
+      "userId": "asd",
+      "balance": 8344838,
+      "type": "expenditure",
+      "date": "2026-04-20",
+      "name": "383",
+      "method": 2,
+      "static": true,
+      "categoryId": 1,
+      "memo": "",
+      "id": 26
+    },
+    {
+      "userId": "asd",
+      "balance": 870870,
+      "type": "expenditure",
+      "date": "2026-04-21",
+      "name": "087087",
+      "method": 1,
+      "static": true,
+      "categoryId": 1,
+      "memo": "",
+      "id": 27
     }
   ]
 }
