@@ -10,6 +10,7 @@
         <RouterLink :to="{ name: 'trade' }">거래 내역</RouterLink>
         <RouterLink :to="{ name: 'report' }">소비 리포트</RouterLink>
       </nav>
+      <button @click="logOut">로그아웃</button>
     </div>
   </header>
 </template>
@@ -17,9 +18,17 @@
 <script setup>
 import { useUserStore } from '@/stores/userStore';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const userStore = useUserStore();
 const isLogIn = computed(() => !!userStore.state.currentUser);
+
+const logOut = () => {
+  localStorage.removeItem('currentUser');
+  userStore.state.currentUser = null;
+  router.push('/');
+};
 </script>
 
 <style scoped>
@@ -58,6 +67,29 @@ const isLogIn = computed(() => !!userStore.state.currentUser);
 .nav-links a:hover {
   color: #000;
   font-weight: bold;
+}
+
+.user-name {
+  margin-left: 10px;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+button {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #ff4d4f; /* 마우스 올리면 경고 의미의 빨간색 계열 */
+  color: white;
+  border-color: #ff4d4f;
 }
 
 .user-name {

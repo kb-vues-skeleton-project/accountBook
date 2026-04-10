@@ -1,9 +1,11 @@
 <template>
   <div class="goal-container" v-if="currentGoal">
     <div class="header-stats">
-      <div class="stat-item">
+      <div class="stat-item clickable" @click="goToGoalEdit">
         <span class="label">{{ displayMonth }} 지출 목표</span>
-        <span class="value">{{ currentGoal.balance.toLocaleString() }}원</span>
+        <span class="value">
+          {{ currentGoal?.balance?.toLocaleString() || 0 }}원
+        </span>
       </div>
 
       <div class="stat-item">
@@ -47,6 +49,9 @@
 import { computed } from 'vue';
 import { useGoalStore } from '@/stores/goalStore';
 import { useTransactionStore } from '@/stores/transactionStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
   yearMonth: String,
@@ -61,6 +66,11 @@ const displayMonth = computed(() => {
   if (!props.yearMonth) return '';
   return props.yearMonth.split('-')[1] + '월';
 });
+
+// 클릭 시 GoalEdit 모달 경로로 이동시키는 함수
+const goToGoalEdit = () => {
+  router.push({ name: 'summary/goal' });
+};
 
 // 🍎 수입 합계 계산 (Store의 전체 내역에서 직접 필터링)
 const totalIncome = computed(() => {
@@ -176,5 +186,23 @@ const overSpendAmount = computed(() => {
 .alert-text {
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* goal 영역에 마우스를 올렸을 때 손가락 모양으로 바뀌게 설정 */
+.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* 마우스를 올렸을 때 살짝 티가 나게 배경색을 바꾸면 더 친절한 UI가 됩니다 */
+.clickable:hover {
+  background-color: #f0f7ff;
+  border-radius: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
 }
 </style>
