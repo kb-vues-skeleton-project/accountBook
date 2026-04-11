@@ -37,6 +37,7 @@ const transactionStore = useTransactionStore();
 const selectedDate = ref(new Date());
 
 const onPageChange = (pages) => {
+  console.log('onPageChange 호출됨', pages); // ← 추가
   if (!pages || pages.length === 0) return;
   const page = pages[0];
   const year = page.year;

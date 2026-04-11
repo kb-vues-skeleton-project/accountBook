@@ -216,7 +216,7 @@ button {
 }
 
 .save-btn {
-  background-color: #1a5c9c; /* 요청하신 색상 */
+  background-color: #1a5c9c;
   color: white; /* 글자 흰색 */
   padding: 12px 24px;
   border: none;
