@@ -1,7 +1,17 @@
 <template>
   <div class="summary-page">
-    <Goal :yearMonth="currMonth" />
-    <Calendar @view-change="handleViewChange" /> <AddButton />
+    <div
+      @click="
+        router.push({ name: 'summary/goal', query: { yearMonth: currMonth } })
+      "
+    >
+      <Goal :yearMonth="currMonth" />
+    </div>
+
+    <Calendar @view-change="handleViewChange" />
+
+    <AddButton :yearMonth="currMonth" />
+
     <RouterView />
   </div>
 </template>
@@ -25,16 +35,15 @@ const currMonth = ref(
 );
 
 // 달력 범위가 변경될 때 서버에서 데이터 fetch
+// Summary.vue
 const handleViewChange = async ({ startDate, endDate }) => {
-  currMonth.value = startDate.substring(0, 7);
+  currMonth.value = startDate.substring(0, 7); // "2026-04"
 
   await Promise.all([
-    transactionStore.fetchTransactions({
-      uId: uId,
-      startDate,
-      endDate,
-    }),
-    goalStore.fetchGoalByMonth(uId, currMonth.value.substring(2)),
+    transactionStore.fetchTransactions({ uId, startDate, endDate }),
+    // ❌ currMonth.value.substring(2) -> "26-04" 가 되어버림 (절대 금지)
+    // ✅ currMonth.value 그대로 전달 -> "2026-04"
+    goalStore.fetchGoalByMonth(uId, currMonth.value),
   ]);
 };
 </script>
