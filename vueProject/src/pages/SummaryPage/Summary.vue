@@ -41,30 +41,58 @@ const currMonth = ref(
   `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`,
 );
 
-// 달력 범위가 변경될 때 서버에서 데이터 fetch
-const handleViewChange = async ({ startDate, endDate }) => {
-  currMonth.value = startDate.substring(0, 7); // "2026-04"
-
+// 1. 공통 fetch 함수
+const loadSummaryData = async (startDate, endDate, month) => {
+  // 중복되는 fetch 로직을 여기에 한 번만 작성
   await Promise.all([
     transactionStore.fetchTransactions({ uId, startDate, endDate }),
-    goalStore.fetchGoalByMonth(uId, currMonth.value),
+    goalStore.fetchGoalByMonth(uId, month),
   ]);
 };
 
+// 2. 달력이 범위를 알려줄 때 (달력 넘길 때)
+const handleViewChange = async ({ startDate, endDate }) => {
+  currMonth.value = startDate.substring(0, 7);
+  await loadSummaryData(startDate, endDate, currMonth.value);
+};
+
+// 3. 페이지가 다시 켜질 때 (컴백할 때)
 onActivated(async () => {
-  // 자식 라우트(GoalEdit, DailyDetail)가 열려있으면 실행하지 않음
   if (route.name !== 'summary') return;
 
+  // 현재 currMonth 기준으로 범위 계산만 하고 loadSummaryData 호출
   const [year, month] = currMonth.value.split('-');
   const startDate = `${year}-${month}-01`;
   const lastDay = new Date(Number(year), Number(month), 0).getDate();
   const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
 
-  await Promise.all([
-    transactionStore.fetchTransactions({ uId, startDate, endDate }),
-    goalStore.fetchGoalByMonth(uId, currMonth.value),
-  ]);
+  await loadSummaryData(startDate, endDate, currMonth.value);
 });
+
+// // 달력 범위가 변경될 때 서버에서 데이터 fetch
+// const handleViewChange = async ({ startDate, endDate }) => {
+//   currMonth.value = startDate.substring(0, 7); // "2026-04"
+
+//   await Promise.all([
+//     transactionStore.fetchTransactions({ uId, startDate, endDate }),
+//     goalStore.fetchGoalByMonth(uId, currMonth.value),
+//   ]);
+// };
+
+// onActivated(async () => {
+//   // 자식 라우트(GoalEdit, DailyDetail)가 열려있으면 실행하지 않음
+//   if (route.name !== 'summary') return;
+
+//   const [year, month] = currMonth.value.split('-');
+//   const startDate = `${year}-${month}-01`;
+//   const lastDay = new Date(Number(year), Number(month), 0).getDate();
+//   const endDate = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+
+//   await Promise.all([
+//     transactionStore.fetchTransactions({ uId, startDate, endDate }),
+//     goalStore.fetchGoalByMonth(uId, currMonth.value),
+//   ]);
+// });
 </script>
 
 <style scoped>
