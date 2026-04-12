@@ -87,7 +87,7 @@
     {
       "id": 1,
       "uId": "admin",
-      "balance": 250000,
+      "balance": 300000,
       "date": "2026-03",
       "amount": 1154000
     },
@@ -103,12 +103,6 @@
       "date": "2026-05",
       "balance": 300000,
       "id": 3
-    },
-    {
-      "uId": "admin",
-      "date": "2026-02",
-      "balance": 10000,
-      "id": 4
     }
   ],
   "transactions": [
