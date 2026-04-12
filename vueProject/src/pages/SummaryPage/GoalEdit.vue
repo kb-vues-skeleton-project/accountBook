@@ -10,9 +10,9 @@ const goalStore = useGoalStore();
 const editBalance = ref(0);
 
 /**
- * 1. 저장할 대상 날짜 결정 (중요!)
+ * 1. 저장할 대상 날짜 결정
  * 쿼리 파라미터(?yearMonth=2026-02)가 있으면 그 값을 쓰고,
- * 없으면 시스템의 오늘 날짜를 기본값으로 사용합니다.
+ * 없으면 시스템의 오늘 날짜를 기본값으로 사용
  */
 const targetYearMonth = computed(() => {
   return (
@@ -26,7 +26,7 @@ const isNewGoal = computed(() => !goalStore.currentMonthGoal);
 onMounted(async () => {
   const uId = JSON.parse(localStorage.getItem('currentUser'));
 
-  // ✨ 핵심: 모달이 열리자마자 "지금 목표로 하는 달"의 데이터를 서버에서 다시 가져옵니다.
+  // ***모달이 열리자마자 "지금 목표로 하는 달"의 데이터를 서버에서 다시 가져옵니다.
   // 이렇게 해야 2월 모달이면 스토어의 currentMonthGoal도 2월 데이터(혹은 null)로 바뀝니다.
   if (targetYearMonth.value) {
     await goalStore.fetchGoalByMonth(uId, targetYearMonth.value);
