@@ -97,27 +97,10 @@ export const useTransactionStore = defineStore('transaction', () => {
     }
   };
 
-  //..
-  // [Summary용 가공 데이터] 4월 총 지출 합계
-  const totalAprilExpenditure = computed(() => {
-    return transactions.value
-      .filter((t) => t.date.startsWith('2026-04') && t.type === 'expenditure')
-      .reduce((acc, cur) => acc + cur.balance, 0);
-  });
-
-  // [Summary용 가공 데이터] 4월 총 수입 합계
-  const totalAprilIncome = computed(() => {
-    return transactions.value
-      .filter((t) => t.date.startsWith('2026-04') && t.type === 'income')
-      .reduce((acc, cur) => acc + cur.balance, 0);
-  });
-
   return {
     transactions,
     dailyTransactions,
     singleTransaction,
-    totalAprilExpenditure,
-    totalAprilIncome,
     fetchTransactions,
     idFetch,
     fetchDailyTransactions,

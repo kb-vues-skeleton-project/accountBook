@@ -36,7 +36,7 @@ const router = createRouter({
       name: 'summary',
       component: Summary,
       children: [
-        // goal을 위로 올려야 정상 작동?? goal은 문자열, :date는 변수이므로?
+        // goal은 문자열, :date는 변수
         {
           path: 'goal',
           name: 'summary/goal',

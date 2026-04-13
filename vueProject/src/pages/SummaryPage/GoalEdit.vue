@@ -1,41 +1,65 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useGoalStore } from '@/stores/goalStore'; // 만든 스토어 가져오기
+import { useRouter, useRoute } from 'vue-router';
+import { useGoalStore } from '@/stores/goalStore';
 
 const router = useRouter();
+const route = useRoute();
 const goalStore = useGoalStore();
 
-// 사용자가 입력할 값을 담는 변수
 const editBalance = ref(0);
 
-// 신규 목표 설정일때
+/**
+ * 1. 저장할 대상 날짜 결정
+ * 쿼리 파라미터(?yearMonth=2026-02)가 있으면 그 값을 쓰고,
+ * 없으면 시스템의 오늘 날짜를 기본값으로 사용
+ */
+const targetYearMonth = computed(() => {
+  return (
+    route.query.yearMonth ||
+    `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`
+  );
+});
+
 const isNewGoal = computed(() => !goalStore.currentMonthGoal);
 
-onMounted(() => {
-  // 스토어에 이미 목표 데이터가 있다면 입력창에 초기값으로 세팅
+onMounted(async () => {
+  const uId = JSON.parse(localStorage.getItem('currentUser'));
+
+  // ***모달이 열리자마자 "지금 목표로 하는 달"의 데이터를 서버에서 다시 가져옵니다.
+  // 이렇게 해야 2월 모달이면 스토어의 currentMonthGoal도 2월 데이터(혹은 null)로 바뀝니다.
+  if (targetYearMonth.value) {
+    await goalStore.fetchGoalByMonth(uId, targetYearMonth.value);
+  }
+
+  // 데이터 동기화가 끝난 후, 입력창에 값 세팅
   if (goalStore.currentMonthGoal) {
+    // 2월 데이터가 있으면 그 금액을 보여줌
     editBalance.value = goalStore.currentMonthGoal.balance;
+  } else {
+    // 2월 데이터가 없으면(null) 신규 등록 모드가 됨 (editBalance는 0)
+    editBalance.value = 0;
   }
 });
 
-// 금액 조절 함수
 const adjustBalance = (amount) => {
   editBalance.value = Math.max(0, editBalance.value + amount);
 };
 
 const handleSave = async () => {
   let result;
+  const uId = JSON.parse(localStorage.getItem('currentUser'));
 
   try {
     if (isNewGoal.value) {
-      // 1. 신규 목표 등록
-      const uId = 'user1'; // 고정값 대신 실제 유저 ID 연동 권장
-      const yearMonth = '2026-04'; // 고정값 대신 props.yearMonth 사용 권장
+      // ✅ 신규 등록 시 targetYearMonth.value (예: '2026-02')를 전달
+      result = await goalStore.createGoal(
+        uId,
+        targetYearMonth.value,
+        editBalance.value,
+      );
 
-      result = await goalStore.createGoal(uId, yearMonth, editBalance.value);
-
-      // 등록 실패 시, 이미 데이터가 존재할 가능성을 고려하여 업데이트 시도
+      // 이미 데이터가 존재하여 등록 실패 시 업데이트로 전환
       if (result && !result.success) {
         const goalId = goalStore.currentMonthGoal?.id;
         if (goalId) {
@@ -43,22 +67,21 @@ const handleSave = async () => {
         }
       }
     } else {
-      // 2. 기존 목표 수정
+      // ✅ 기존 목표 수정
       const goalId = goalStore.currentMonthGoal?.id;
       if (goalId) {
         result = await goalStore.updateGoal(goalId, editBalance.value);
       }
     }
 
-    // 최종 결과 처리
     if (result?.success) {
       router.push({ name: 'summary' });
     } else {
       alert('저장에 실패했습니다. 다시 시도해 주세요.');
     }
   } catch (error) {
-    console.error('Goal 처리 중 예외 발생:', error);
-    alert('시스템 에러가 발생했습니다.');
+    console.error('Goal 저장 에러:', error);
+    alert('시스템 오류가 발생했습니다.');
   }
 };
 </script>
@@ -193,7 +216,7 @@ button {
 }
 
 .save-btn {
-  background-color: #1a5c9c; /* 요청하신 색상 */
+  background-color: #1a5c9c;
   color: white; /* 글자 흰색 */
   padding: 12px 24px;
   border: none;

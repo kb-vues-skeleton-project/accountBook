@@ -81,9 +81,12 @@ const displayMonth = computed(() => {
   return props.yearMonth.split('-')[1] + '월';
 });
 
-// 클릭 시 GoalEdit 모달 경로로 이동시키는 함수
+// 클릭 시 GoalEdit 모달 경로로 이동 + yearMonth 쿼리스트링으로 넘겨줌
 const goToGoalEdit = () => {
-  router.push({ name: 'summary/goal' });
+  router.push({
+    name: 'summary/goal',
+    query: { yearMonth: props.yearMonth }, // 현재 보고 있는 날짜를 쿼리로 전달
+  });
 };
 
 // 🍎 수입 합계 계산 (Store의 전체 내역에서 직접 필터링)
